@@ -162,7 +162,7 @@ Programming project 1
 
     double mpg(double mi, double lit){
 
-        return (LITGAL*lit)*mi;
+        return (LITGAL*(lit/mi))*mi;     //Find lit per mi, convert lit/mi to gal/mi and multiply by total mi..
     }
 
 
