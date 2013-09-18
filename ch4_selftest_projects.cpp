@@ -297,7 +297,6 @@ double max(double a1, double b1, double c1){
 }
 
     */
-
 //Kelvin Silva
 //Convert time entered to 24-hour time and subtract. take absolute value in case a negative value occurs and return to main
 //Problem 16, 17 pp 246
@@ -372,9 +371,13 @@ int main(){
     //int tens_high = 0, tens_low = 0;
     //nt hundreds_high = 0, hundreds_low = 0;
 
-
-    cout << "Enter number: ";
+    cout << "Enter Number: ";
     cin >> number;
+    while ( number > 999 || number < 0){    //Preread loop to make sure the number entered is within specified range.
+
+        cout << "Enter number between 0 and 999: ";
+        cin >> number;
+    }
 
     bool contains_bad_digit = true;
     num_op_temp = number;
@@ -392,7 +395,7 @@ int main(){
     //Second loop is to find low point.
     contains_bad_digit = true;
     num_op_temp = number;
-    while (condition){
+    while (contains_bad_digit){
 
         if (containsdigit(1, num_op_temp) || containsdigit(4, num_op_temp) || containsdigit(7, num_op_temp)){
             num_op_temp++;
@@ -405,7 +408,7 @@ int main(){
     cout << "Highest: " <<hi << "\nLowest: " << lo;
 
 }
-
+//Project 17. pp 246: "...write a function named containsDigit that determines if a number contains a particular digit"
 bool containsdigit(int digit, int number){
 
     if ((number % 10) == digit || ((number/10)%10) == digit || (number/100) == digit)
