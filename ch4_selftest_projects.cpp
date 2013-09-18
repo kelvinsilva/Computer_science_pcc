@@ -165,6 +165,136 @@ Programming project 1
         return (LITGAL*(lit/mi))*mi;     //Find lit per mi, convert lit/mi to gal/mi and multiply by total mi..
     }
 
+//Project 3 Ch4 Kelvin Silva
+#include <iostream>
+ 
+using namespace std;
+ 
+double stockprice(int sharenum, int whole, int num, int den);
+ 
+int main(){
+ 
+    bool running = true;
+    char cont = 0;
+ 
+    int owned;
+    int den, num, whole;
+ 
+    do{
+ 
+        cout << "Enter number of shares owned: ";
+        cin >> owned;
+        cout << "\nEnter whole number: ";
+        cin >> whole;
+        cout << "\nEnter numerator: ";
+        cin >> num;
+        cout << "\nEnter denominator: ";
+        cin >> den;
+ 
+        cout << "Total value of holdings is: " << stockprice(owned, whole, num, den) << endl;
+ 
+        cout << "Continue? (y/n)\n: ";
+        cin >> cont;
+        if (cont == 'n' || cont == 'N')
+            running = false;
+ 
+    }while (running);
+ 
+    return 0;
+}
+ 
+double stockprice(int sharenum, int whole, int num, int den){
+ 
+    double frac = static_cast<double>(num)/static_cast<double>(den); //Obtain decimal portion
+    frac += static_cast<double>(whole); //Add whole portion to decimal portion.
+ 
+    return frac*sharenum;
+}
+ 
+ 
+//Project 4 Kelvin Silva
+#include <iostream>
+ 
+using namespace std;
+ 
+double inflat(double yesterday, double today);
+ 
+int main(){
+ 
+    bool running = true;
+    char cont = 0;
+ 
+    double today, yesterday;
+ 
+    do{
+ 
+        cout << "Enter price of item one year ago ";
+        cin >> yesterday;
+        cout << "\nEnter price of item today ";
+        cin >> today;
+ 
+        cout << "Inflation: " << inflat(yesterday, today);
+ 
+        cout << "Continue? (y/n)\n: ";
+        cin >> cont;
+        if (cont == 'n' || cont == 'N')
+            running = false;
+ 
+    }while (running);
+ 
+    return 0;
+}
+ 
+double inflat(double yesterday, double today){
+ 
+ 
+    return (today - yesterday)/yesterday;
+ 
+}
+ ***************************************************
+//Project 11 Kelvin Silva
+//If x is negative then return opposite of X
+//OPTIONAL: take square root of x^2 for abs value
+int abs(int x){
+ 
+    if(x <= 0){
+        return x*-1;
+    }else return x;
+}
+ 
+float abs(float x){
+    if (x <= 0){
+        return x*(-1.0);
+    }else return x;
+ 
+}
+ 
+double abs(double x){
+    if (x <= 0){
+        return x*(-1.0);
+    }else return x;
+}
+ 
+long abs(long x){
+    if(x <= 0){
+        return x*-1;
+    }else return x;
+}
+//Project 12 Kelvin Silva
+//Take max of 2 numbers then evaluate that max with the third
+//Return the maximum value;
+double max(double a, double b){
+ 
+    double retval = b;
+    if (a > b)
+        retval = a;
+    return retval;
+}
+ 
+double max(double a1, double b1, double c1){
+    double retval =  max(a1, max(b1, c1));
+    return retval;
+}
 
     */
 
