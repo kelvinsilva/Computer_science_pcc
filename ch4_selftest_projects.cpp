@@ -298,3 +298,120 @@ double max(double a1, double b1, double c1){
 
     */
 
+//Kelvin Silva
+//Convert time entered to 24-hour time and subtract. take absolute value in case a negative value occurs and return to main
+//Problem 16, 17 pp 246
+/*
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+int compute_time(int hrstart, int minstart, int ampmstart, int hrend, int minend, int ampmend);
+int main()
+{
+    int hours_begin, minutes_begin;
+    int hours_end, minutes_end;
+    char dummy, ampm_begin, ampm_end; //Ignore the dummy character
+
+    cout << "Enter beginning time (hour:minutes A/P, ex 2:30A): ";
+    cin >> hours_begin >> dummy >>  minutes_begin >> ampm_begin;
+
+    cout << "Enter end time (hour:minutes AM/PM, ex 2:30P): ";
+    cin >> hours_end >> dummy >> minutes_end >> ampm_end;
+
+    int minutes = compute_time(hours_begin, minutes_begin, ampm_begin, hours_end, minutes_end, ampm_end);
+    cout << "\nDifference is in minutes: "<< minutes<<"\n";
+    cout << "\nTime conversion: " << minutes/60 << ":" << (minutes - (minutes/60)*60);
+
+
+    return 0;
+}
+//pp 246 Problem solving c++: "Your function should return as an int, the time difference in minutes."
+int compute_time(int hrstart, int minstart, int ampmstart, int hrend, int minend, int ampmend){
+    int minutes = 0;
+
+    if (ampmend == ampmstart){ //If 10:00AM and 2:00 AM are inputted for ex-> we will assume a 24 hour cycle.
+        if (hrend <= hrstart){
+
+            hrstart -= 24;
+            hrstart = abs(hrstart);
+            minutes = (hrstart+hrend)*60;
+        }else {
+
+            minutes = (hrstart - hrend)*60;
+        }
+    }else {
+
+        if(hrstart > hrend){    //Makes sure that the program doesnt get confused by 12:00AM and 12:00PM
+            minutes += ((abs(hrstart - 12)+hrend)*60);
+        }else {
+
+            minutes += abs((((abs(hrstart - 12)+hrend)-12)*60));
+
+        }
+    }
+
+
+    minutes += abs(minend - minstart); //Calculate minutes
+    minutes = abs(minutes); //Use absolute value since time cannot be negative, in case it is negative
+
+    return minutes;
+}*/
+/*
+//Kelvin Silva Project 17 ch4.
+//Increment number or decrement number if number containsdigit.
+#include <iostream>
+using namespace std;
+
+bool containsdigit(int digit, int number);
+
+int main(){
+
+    int number = 0, num_op_temp;
+    int hi, lo;
+    //int tens_high = 0, tens_low = 0;
+    //nt hundreds_high = 0, hundreds_low = 0;
+
+
+    cout << "Enter number: ";
+    cin >> number;
+
+    bool contains_bad_digit = true;
+    num_op_temp = number;
+    //First loop is to find high point
+    while (contains_bad_digit){
+
+        if (containsdigit(1,  num_op_temp) || containsdigit(4,  num_op_temp) || containsdigit(7, num_op_temp)){
+            num_op_temp--;
+        }else{
+            contains_bad_digit = false;
+            lo = num_op_temp;
+        }
+    }
+
+    //Second loop is to find low point.
+    contains_bad_digit = true;
+    num_op_temp = number;
+    while (condition){
+
+        if (containsdigit(1, num_op_temp) || containsdigit(4, num_op_temp) || containsdigit(7, num_op_temp)){
+            num_op_temp++;
+        }else{
+            contains_bad_digit = false;
+            hi = num_op_temp;
+        }
+    }
+
+    cout << "Highest: " <<hi << "\nLowest: " << lo;
+
+}
+
+bool containsdigit(int digit, int number){
+
+    if ((number % 10) == digit || ((number/10)%10) == digit || (number/100) == digit)
+        return true;
+    else
+        return false;
+
+}
+*/
