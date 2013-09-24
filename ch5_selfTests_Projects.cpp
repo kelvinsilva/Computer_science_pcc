@@ -141,3 +141,103 @@ double stub(double stub){
 24. debugger is a tool that lets you control flow of a program
 
 25. add cout << statements to debug.
+
+/*Project 12 Ch 5
+  Kelvin Silva
+  
+
+#include <iostream>
+
+using namespace std;
+
+void Convert(int Big, double small, int choice, double &ResultBig, double &ResultSmall);
+
+
+int main()
+{
+    int choice = 0;
+    double big = 0, small = 0, resultbig = 0, resultsmall = 0;
+    while (choice != 5){
+        cout << "\nMenu:\n1. Metric length to English length"
+             <<       "\n2. English Length to Metric length"
+             <<       "\n3. Metric weight to English weight"
+             <<       "\n4. English weight to Metric Weight"
+             <<       "\n5. Quit\nChoice: ";
+
+        cin >> choice;
+
+        switch(choice){
+
+            case 1:
+                cout << "\n\nEnter Meters: ";
+                cin >> big;
+                cout << "\nEnter Centimeters: ";
+                cin >> small;
+                Convert(big, small, choice, resultbig, resultsmall);
+                cout << "Feet: " << resultbig << "Inches: " << resultsmall;
+
+            break;
+            case 2:
+                cout << "\n\nEnter Feet: ";
+                cin >> big;
+                cout << "\nEnter Inches: ";
+                cin >> small;
+                Convert(big, small, choice, resultbig, resultsmall);
+                cout << "Meters: " << resultbig << "Centimeters: " << resultsmall;
+            break;
+            case 3:
+                cout << "\n\nEnter Kilogram: ";
+                cin >> big;
+                cout << "\nEnter Grams: ";
+                cin >> small;
+                Convert(big, small, choice, resultbig, resultsmall);
+                cout << "Pounds: " << resultbig << "Ounces: " << resultsmall;
+            break;
+            case 4:
+                cout << "\n\nEnter Pounds: ";
+                cin >> big;
+                cout << "\nEnter Ounces: ";
+                cin >> small;
+                Convert(big, small, choice, resultbig, resultsmall);
+                cout << "Kilograms: " << resultbig << "Grams: " << resultsmall;
+            break;
+            case 5:
+
+            break;
+            default:
+                cout << "\nEnter 1-5.\n";
+            break;
+
+        }
+    }
+    return 0;
+}
+
+void Convert(int Big, double small, int choice, double &ResultBig, double &ResultSmall){
+
+    switch(choice){
+
+        case 1:
+
+            ResultBig =  static_cast<double>(Big) * 3.28;
+            ResultSmall = static_cast<double>(small)*0.393701;
+        break;
+        case 2:
+
+            ResultBig =  static_cast<double>(Big) * 0.3048;
+            ResultSmall = static_cast<double>(small)*2.54;
+        break;
+        case 3:
+
+             ResultBig =  static_cast<double>(Big) * 2.20462;
+             ResultSmall = static_cast<double>(small)*0.035274;
+        break;
+        case 4:
+
+            ResultBig =  static_cast<double>(Big) * 0.453592;
+            ResultSmall = static_cast<double>(small)*28.3495;
+        break;
+    }
+
+}
+*/
