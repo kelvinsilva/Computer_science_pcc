@@ -241,3 +241,167 @@ void Convert(int Big, double small, int choice, double &ResultBig, double &Resul
 
 }
 */
+/*
+//Project 1 Kelvin Silva Ch 5
+#include <iostream>
+
+using namespace std;
+
+void RetrieveTimeInput(int &hr, int &minute);
+void OutputTime(int hr, int minute, char &AP);
+void ConvertHr(int hr, int minute, int &dest_hr, int &dest_min, char &AP);
+
+int main(){
+
+    int hr, minute, dest_hr, dest_min;
+    char AP;
+
+    RetrieveTimeInput(hr, minute);
+    ConvertHr(hr, minute, dest_hr, dest_min, AP);
+    OutputTime(dest_hr, dest_min, AP);
+
+
+}
+
+void RetrieveTimeInput(int &hr, int &minute){
+
+    char trash;
+
+    do{
+
+        cout << "\nEnter time, minutes less than 60: ";
+        cin >> hr >> trash >> minute;
+    }while(minute > 60 );
+
+}
+void OutputTime(int hr, int minute, char &AP){
+
+    cout << "Time convert to 12 hr: " << hr << ":" << minute << " " << AP;
+
+}
+void ConvertHr(int hr, int minute, int &dest_hr, int &dest_min, char &AP){
+
+    if (hr > 12){
+        dest_hr = hr - 12;
+        AP = 'P';
+    }else {
+
+        dest_hr = hr;
+        AP = 'A';
+    }
+    dest_min = minute;
+}
+*/
+/*
+//Project 2 Kelvin Silva Ch 5
+#include <iostream>
+
+using namespace std;
+
+void compute_time(int &hr, int &minute, int waithr, int waitmin);
+void RetrieveTimeInput(int &hr, int &minute);
+void OutputTime(int hr, int minute);
+
+int main(){
+
+    int hr = 1, minute = 1, dest_hr = 1, dest_min = 1;
+    char AP;
+
+    while (1){
+
+        RetrieveTimeInput(hr, minute);
+            if (hr < 0) return 0;
+        RetrieveTimeInput(dest_hr, dest_min);
+            if (dest_hr < 0) return 0;
+
+        compute_time(hr, minute, dest_hr, dest_min);
+        OutputTime(hr, minute);
+    }
+}
+
+void compute_time(int &hr, int &minute, int waithr, int waitmin){
+
+    hr += waithr;
+
+    int minutes = waitmin;
+    hr += (minutes/60);
+    minute = minutes - ((minutes/60)*60);
+
+}
+
+void RetrieveTimeInput(int &hr, int &minute){
+
+    char trash;
+        cout << "\nEnter time, enter -1:00 to quit, minutes less than 60: ";
+        cin >> hr >> trash >> minute;
+}
+
+void OutputTime(int hr, int minute){
+
+    cout << "Time after: " << hr << ":" << minute;
+}
+*/
+
+//Kelvin Silva Project 5 Ch 5
+/*
+#include <iostream>
+
+using namespace std;
+
+
+void compute_coin(int change, int &quarters, int &dimes, int &pennies);
+
+int main(){
+
+    int change = 1;
+    int quarters = 0, dimes = 0, pennies = 0;
+
+    cout << "Enter money, type -1 to quit: ";
+    cin >> change;
+    while (change > 0){
+
+        compute_coin(change, quarters, dimes, pennies);
+        cout << endl << change << " money can be used as \nquarters: " << quarters << "\ndimes: " << dimes << "\npennies: " << pennies << endl;
+
+        cout << "Enter money, type -1 to quit: ";
+        cin >> change;
+    }
+}
+
+void compute_coin(int change, int &quarters, int &dimes, int &pennies){
+
+    quarters = (change/25);
+    change %= 25;
+    dimes = (change/10);
+    change %= 10;
+    pennies = (change/1);
+
+}
+*/
+
+/*
+
+//Kelvin silva project 17 ch 5
+//Day of week - work in progress
+
+#include <iostream>
+
+void dayofweek(int number, char &day);
+using namespace std;
+int main(){
+
+    int number;
+    cout << "Enter day of week: ";
+    cin >> number;
+    char day;
+    dayofweek(number, day);
+    cout << "It is " << day << "onday";
+
+}
+
+void dayofweek(int number, char &day){
+
+    day = 'M';
+
+}
+*/
