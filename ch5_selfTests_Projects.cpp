@@ -405,3 +405,108 @@ void dayofweek(int number, char &day){
 
 }
 */
+//Project 16 Kelvin Silva
+/*
+#include <iostream>
+
+using namespace std;
+
+bool isLeapYear(int year);
+int getMonthValue(int month, int year);
+int getYearValue(int year);
+int getCenturyValue(int year);
+
+int main(){
+    int day, month, year;
+    char trash;
+    cout << "Enter date DD/MM/YYYY: ";
+    cin >> day >> trash >> month >> trash >> year;
+    cout << endl;
+    
+    switch((day+getMonthValue(month, year)+getYearValue(year)+getCenturyValue(year))%7){
+
+        case 0:
+            cout << "Sunday";
+            break;
+        case 1:
+            cout << "Monday";
+            break;
+        case 2:
+            cout << "Tuesday";
+            break;
+        case 3:
+            cout << "Wednesday";
+            break;
+        case 4:
+            cout << "Thursday";
+            break;
+        case 5:
+            cout << "Friday";
+            break;
+        case 6:
+            cout << "Saturday";
+            break;
+    }
+
+    return 0;
+}
+
+bool isLeapYear(int year){
+
+        return (!(year%400)) || ((!(year%4)) && (year%100));
+}
+
+int getCenturyValue(int year){
+
+    return (3-(year%4))*2;
+}
+
+int getYearValue(int year){
+
+    return ((year%100)/4) + (year%100);
+}
+
+int getMonthValue(int month, int year){
+    switch(month){
+
+        case 1:
+            if (isLeapYear(year))
+                return 6;
+            else return 0;
+            break;
+        case 2:
+            if (isLeapYear(year))
+                return 2;
+            else return 3;
+            break;
+        case 5:
+            return 1;
+            break;
+        
+        case 6:
+            return 4;
+            break;
+        case 4:
+        case 7:
+            return 6;
+            break;
+        case 8:
+            return 2;
+    
+            break;
+        
+        case 10:
+            return 0;
+            break;
+            
+        case 3:
+        case 11:
+            return 3;
+        break;
+        case 9:
+        case 12:
+            return 5;
+
+    }
+}
+*/
