@@ -510,3 +510,40 @@ int getMonthValue(int month, int year){
     }
 }
 */
+
+//Vending machine problem, Kelvin Silva
+//2013
+
+#include <iostream>
+
+using namespace std;
+
+double next_coin(double coin);
+double coincount = 3.50;
+
+int main(){
+
+
+    double nextcoin = 0;
+    while (1){
+        cout << "\nEnter amount of next coin, dime, nickel, quarters (10, 5, 25)";
+        cin >> nextcoin;
+
+        if (next_coin(nextcoin) < 0){
+            cout << "\nEnjoy your twinkie!";
+            return 0;
+        }
+        cout << "\nYou have to input " << coincount << " amount to obtain twinkie\n";
+
+
+    }
+
+
+}
+
+double next_coin(double coin){
+
+    coincount = coincount - coin;
+    return (coincount - coin);
+
+}
