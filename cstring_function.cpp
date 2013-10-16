@@ -57,3 +57,13 @@ void StrCat(char destination[], char source[]){
 
 }
 
+int Find(char key, char source[]){
+    int i = 0;
+    while (source[i] != '\0'){
+
+        if (source[i] == key){
+            return i;
+        }
+        i++;
+    }
+}
