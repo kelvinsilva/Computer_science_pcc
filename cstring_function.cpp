@@ -1,7 +1,3 @@
-#include <iostream>
-
-using namespace std;
-
 //Kelvin Silva
 int StrLen(char A[]){
 
