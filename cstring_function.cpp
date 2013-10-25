@@ -49,6 +49,13 @@ void StrCat(char destination[], char source[]){
 
 }
 
+void SubStr(char source[], char destination[], int startpos, int endpos){
+
+    for (int i = 0; i <= (endpos - startpos); i++ ){
+        destination[i] = source[startpos+i];
+    }
+}
+
 int Find(char key, char source[], int startpos){
 
     int i = startpos;
