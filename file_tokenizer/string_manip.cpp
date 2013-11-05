@@ -1,3 +1,4 @@
+#include "string_manip.h"
 
 int StrLen(char A[]){
 
