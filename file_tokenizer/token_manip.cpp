@@ -91,9 +91,9 @@ bool GetNextToken(char block[], char token[], int &pos, int &type){
 } //return true if token does not exist
 
 //Type 1 = alpha numeric, type 2 = punctuation, type 3 white spce, type 4 newline
-int TokenizeBlock(char block[], char char_table[][TOKEN_MAX_SIZE], int statistics[]){ //return amount of tokens tokenized.
+int TokenizeBlock(char block[], char char_table[][TOKEN_MAX_SIZE], int statistics[], int &row_ct){ //return amount of tokens tokenized.
 
-    int pos = 0, type = 0, row = 0;
+    int pos = 0, type = 0, row = row_ct;
     while(GetNextToken(block, char_table[row], pos, type)){
 
         statistics[type]++;
