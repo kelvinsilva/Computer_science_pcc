@@ -26,6 +26,7 @@ void sub_board(int board[][WORLDSIZE], int boardsub[][3], int i, int j);
 
 int count_neighbor(int sub_board[][3]);
 
+
 int main(){
 
     int board[WORLDSIZE][WORLDSIZE] = {};
@@ -44,15 +45,11 @@ int main(){
     while (1){
 
         new_line(20);
-
         display_board(board);
-
         rule(board, board_temp, subboard);
-
         copy_board(board, board_temp);
 
         cout << "Press enter for next iteration...";
-
 
         cin.get();
         Sleep(200);
@@ -135,11 +132,16 @@ void rule(int board[][WORLDSIZE], int board_temp[][WORLDSIZE], int subboard[][3]
             }
 
             if (board[i][j] == 1){
-                if (neighbor_count < 2)
+                if (neighbor_count < 2){
                     board_temp[i][j] = 0;
+                }
                 else if ( neighbor_count > 3){
                     board_temp[i][j] = 0;
                 }
+                else{
+                    board_temp[i][j] = 1;
+                }
+
             }else if ( board[i][j] == 0 && neighbor_count == 3){
                 board_temp[i][j] = 1;
             }
