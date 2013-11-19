@@ -63,6 +63,11 @@ void display_board(int board[][WORLDSIZE]){
 
         for (int x = 0; x < WORLDSIZE; x++){
 
+            if ( i == 1 || i == WORLDSIZE-2 || x == 1 || x == WORLDSIZE-2){
+                cout << " ";
+                continue;
+            }
+
             if (board[i][x] == 2){
                 cout << "* ";
             }else if (board[i][x] == 1){
