@@ -2,6 +2,7 @@
 #include <windows.h>
 #include "rule.h"
 #include "array_manip.h"
+#include "save.h"
 
 using namespace std;
 
@@ -76,7 +77,7 @@ int main(){
     board[6][7] = 1;
 
 
-    new_line(20);
+ /*   new_line(20);
     display_board(board);
 
         //border_reflection(board);
@@ -87,26 +88,102 @@ int main(){
 
     cout << "Press enter for next iteration...";
 
-    cin.get();
+    cin.get();*/
 
-    while (1){
+    bool exit = false;
+    int iterate = 1;
+    char operation = 0;
+    int delay = 200;
 
-        new_line(20);
+    while (!exit){
+
+        for (int i = 0; i < iterate; i++){
+            new_line(20);
+
+            border_reflection(board);
+            rule(board, board_temp, subboard);
+            border_reflection(board_temp);
+
+            copy_board(board, board_temp);
+            display_board(board);
+
+            Sleep(delay);
+        }
+
+        cout << "Enter choice: "
+             << "\nPress Enter to iterate once "
+             << "\nType 'i' and a number and enter to iterate number times"
+             << "\nType 'p' to save screen to text file"
+             << "\nType 's' and four numbers to save a portion of screen to text file"
+             << "\nType 'l' to load a file onto screen";
 
 
-        border_reflection(board);
-        rule(board, board_temp, subboard);
-        border_reflection(board_temp);
+        iterate = 1;
+        switch(cin.get()){
 
-        copy_board(board, board_temp);
-        display_board(board);
+            case 'n':{
+                continue;
+            }
+            break;
+            case 'i':{
+
+                cin >> iterate;
+                cin.ignore();
+                break;
+            }
+            case 's':{
+                int i = 0, ii = 0, j = 0, jj = 0;
+                //i = cin.get()
+                //cin.ignore(999);
+                //cin.ignore();
+
+                    cin >> i >> j >> ii >> jj;
 
 
-        cout << "Press enter for next iteration...";
+                    cout << "\nFile Saved to program directory. Press Enter for next iteration";
+                    cin.ignore();
+                    cin.get();
+            }
+            break;
+            case 'p':{
 
-        cin.get();
-        Sleep(200);
-        //dostuff...
+                fstream fout;
+                Open_File_Prompt(fout);
+                cout << "Do you want a graphical printout, or a logical printout? (G/L)?";
+
+                cin.ignore();
+                char choice = cin.get();
+                if (choice == 'G' || choice == 'g'){
+                    display_board(fout, board);
+                }else out_file_board(fout, board_temp);
+
+                cout << "\nScreen saved to text file. Press Enter for next generation";
+                fout.close();
+                cin.ignore();
+                cin.get();
+            }
+            break;
+            case 'l':{
+
+                fstream fin;
+                cin.ignore();
+                Open_File_Prompt(fin);
+                load_file(fin, board);
+                cin.ignore();
+                cout << "Loaded.... Press enter for next generation";
+                fin.close();
+                cin.ignore();
+                cin.get();
+            }
+            break;
+            case 'd':{
+                cin >> delay;
+                cin.ignore();
+            }
+            break;
+        }
+
+            //dostuff...
     }
 
     return 0;

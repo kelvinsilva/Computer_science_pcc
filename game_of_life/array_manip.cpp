@@ -1,5 +1,27 @@
 #include "array_manip.h"
 
+void display_board(std::ostream &ost, int board[][WORLDSIZE]){ //convert integer values to graphical characters
+
+    for (int i = 0; i < WORLDSIZE; i++){
+
+        for (int x = 0; x < WORLDSIZE; x++){
+
+            if ( i == 1 || i == WORLDSIZE-2 || x == 1 || x == WORLDSIZE-2){
+                ost << " ";
+                continue;
+            }
+
+            if (board[i][x] == 2){
+                ost << "* ";
+            }else if (board[i][x] == 1){
+                ost << 'O' << " ";
+            }else if (board[i][x] == 0){
+                ost << 'X' << " ";
+            }
+        }
+        ost << "\n";
+    }
+}
 void init_board(int board[][WORLDSIZE]){
 
     for (int y = 0; y < WORLDSIZE; y++){
