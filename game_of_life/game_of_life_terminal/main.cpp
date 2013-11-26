@@ -31,6 +31,7 @@ void border_reflection(int board[][WORLDSIZE]){
     for (int i = 1; i <= WORLDSIZE-2; i++){
         board[i][1] = board[i][WORLDSIZE-3];
         board[i][WORLDSIZE-2] = board[i][2];
+
     }
 
     //corners
@@ -70,11 +71,11 @@ int main(){
     board[15][WORLDSIZE-4] = 1;*/
 
     //glider test
-    board[8][6] = 1;
-    board[8][7] = 1;
-    board[8][8] = 1;
-    board[7][8] = 1;
-    board[6][7] = 1;
+    //board[8][6] = 1;
+   // board[8][7] = 1;
+    //board[8][8] = 1;
+    //board[7][8] = 1;
+    //board[6][7] = 1;
 
 
  /*   new_line(20);
@@ -92,7 +93,7 @@ int main(){
 
     bool exit = false;
     int iterate = 1;
-    char operation = 0;
+
     int delay = 200;
 
     while (!exit){
@@ -137,9 +138,11 @@ int main(){
                 //cin.ignore(999);
                 //cin.ignore();
 
+
                     cin >> i >> j >> ii >> jj;
-
-
+                    fstream fout;
+                    Open_File_Prompt(fout, 1);
+                    out_file_board(fout, board, i, j, ii, jj);
                     cout << "\nFile Saved to program directory. Press Enter for next iteration";
                     cin.ignore();
                     cin.get();
@@ -148,7 +151,7 @@ int main(){
             case 'p':{
 
                 fstream fout;
-                Open_File_Prompt(fout);
+                Open_File_Prompt(fout, 1);
                 cout << "Do you want a graphical printout, or a logical printout? (G/L)?";
 
                 cin.ignore();
@@ -167,12 +170,12 @@ int main(){
 
                 fstream fin;
                 cin.ignore();
-                Open_File_Prompt(fin);
+                Open_File_Prompt(fin, 0);
                 load_file(fin, board);
                 cin.ignore();
                 cout << "Loaded.... Press enter for next generation";
                 fin.close();
-                cin.ignore();
+                //cin.ignore();
                 cin.get();
             }
             break;
