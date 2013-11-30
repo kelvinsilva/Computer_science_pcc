@@ -32,20 +32,16 @@ void out_line(ofstream &fout, int line[], int size_arr){
     }
 }
 */
-
 void out_file_board(fstream &fout, int board[][WORLDSIZE], int i, int j, int ii, int jj){
 //blit subarray into an empty board
     int board_out_temp[WORLDSIZE][WORLDSIZE];
     init_board(board_out_temp);
 
+    for (int r = j; r <= jj; r++){
 
-    for (int r = 0; r < WORLDSIZE; r++){
+        for(int c = i; c <= ii; c++){
 
-        for(int c = 0; c < WORLDSIZE; c++){
-
-            if ((r > i && c > j) && (r < ii && c < jj)){
-                board_out_temp[r][c] = board[r][c];
-            }
+             board_out_temp[r][c] = board[r][c];
         }
     }
     out_file_board(fout, board_out_temp);
