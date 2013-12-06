@@ -1,13 +1,15 @@
 #include "array_manip.h"
 
 void display_board(std::ostream &ost, int board[][WORLDSIZE]){ //convert integer values to graphical characters
+//this function used only for terminal. deprecated in qt opengl
+//to display in cout or fstream usage
 
     for (int i = 0; i < WORLDSIZE; i++){
 
         for (int x = 0; x < WORLDSIZE; x++){
 
             if ( i == 1 || i == WORLDSIZE-2 || x == 1 || x == WORLDSIZE-2){
-                ost << " ";
+                ost << " ";    //ost outstream 
                 continue;
             }
 
@@ -22,7 +24,7 @@ void display_board(std::ostream &ost, int board[][WORLDSIZE]){ //convert integer
         ost << "\n";
     }
 }
-void init_board(int board[][WORLDSIZE]){
+void init_board(int board[][WORLDSIZE]){    //initiate all array of board with dead cells and a border
 
     for (int y = 0; y < WORLDSIZE; y++){
 
@@ -53,7 +55,7 @@ void init_board(int board[][WORLDSIZE]){
     }
 }
 
-void copy_board(int dest[][WORLDSIZE], int src[][WORLDSIZE]){
+void copy_board(int dest[][WORLDSIZE], int src[][WORLDSIZE]){ 
 
     for (int i = 0; i < WORLDSIZE; i++){
 
@@ -64,7 +66,7 @@ void copy_board(int dest[][WORLDSIZE], int src[][WORLDSIZE]){
     }
 }
 
-void sub_board(int board[][WORLDSIZE], int subboard[][3], int i, int j){
+void sub_board(int board[][WORLDSIZE], int subboard[][3], int i, int j){    //takes a sub_board (like a substring)
 
     int is = i - 1;
     int js = j - 1;
@@ -80,7 +82,7 @@ void sub_board(int board[][WORLDSIZE], int subboard[][3], int i, int j){
 }
 
 void display_board(int board[][WORLDSIZE]){
-
+//used for cout only!
     for (int i = 0; i < WORLDSIZE; i++){
 
         for (int x = 0; x < WORLDSIZE; x++){
