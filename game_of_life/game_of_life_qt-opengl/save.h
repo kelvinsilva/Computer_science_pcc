@@ -9,7 +9,7 @@
 
 
 void Open_File_Prompt(fstream &ofn, int rw);
-void out_file_board(fstream &fout, int board[][WORLDSIZE], int i, int j, int ii, int jj);
-void out_file_board(fstream &fout, int board[][WORLDSIZE]);
+void out_file_board(fstream &fout, int board[][WORLDSIZE], int i, int j, int ii, int jj);	//captures section of screen
+void out_file_board(fstream &fout, int board[][WORLDSIZE]);	//captures whole screen
 void load_file(fstream  &fin, int board[][WORLDSIZE]);
 #endif // SAVE_H_
