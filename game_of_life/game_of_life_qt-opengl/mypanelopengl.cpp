@@ -7,6 +7,7 @@
 #include <iostream>
 
 
+
 using namespace std;
 
 
@@ -24,6 +25,104 @@ MyPanelOpenGL::MyPanelOpenGL(QWidget *parent) :
     board[6][7] = 1;
     this->installEventFilter(this);
     iter_ct = 0;
+    m_mouseClick = false;
+    gl_pointsz = 6;
+
+}
+
+//mouse click methods
+
+void MyPanelOpenGL::mousePressEvent ( QMouseEvent * e )
+{
+    // set the flag meaning "click begin"
+    m_mouseClick = true;
+    // store click position
+    m_lastPoint = e->pos();
+
+
+        int i = (int) (m_lastPoint.y()/gl_pointsz);
+        int j = (int) (m_lastPoint.x()/gl_pointsz);
+
+        if (i < WORLDSIZE-1 && j < WORLDSIZE-1 && i > 0 && j > 0){
+            board[i][j] = 1;
+        }
+            repaint();
+            updateGL();
+}
+
+void MyPanelOpenGL::mouseMoveEvent( QMouseEvent * e){
+
+    if (m_mouseClick){
+        m_mouseDrag = true;
+        m_pointTwo = e-> pos();
+        int i = (int) (m_pointTwo.y()/gl_pointsz);
+        int j = (int) (m_pointTwo.x()/gl_pointsz);
+
+        /*if (i < WORLDSIZE-1 && j < WORLDSIZE-1 && i > 0 && j > 0){
+            board[i][j] = 1;
+        }
+            repaint();
+            updateGL();
+    }*/
+        int tempbd[WORLDSIZE][WORLDSIZE];
+        copy_board(tempbd, board);
+        x_ = m_lastPoint.x()/gl_pointsz;
+        y_ = m_lastPoint.y()/gl_pointsz;
+        x_x = m_pointTwo.x()/gl_pointsz;
+        y_y = m_pointTwo.y()/gl_pointsz;
+
+        if (x_ > 0 && y_ > 0 && x_x > 0 && y_y > 0
+            && x_ < WORLDSIZE-1 && x_x < WORLDSIZE-1 && y_ < WORLDSIZE-1 && y_y < WORLDSIZE-1){
+            for (int i = ((y_ < y_y) ? y_ : y_y);
+                 i < ((y_ > y_y) ? y_ : y_y);
+                 i++ ){
+
+                board[i][x_] = 3;
+                board[i][x_x] = 3;
+            }
+            for (int j = ((x_ < x_x) ? x_ : x_x);
+                 j < ((x_ > x_x) ? x_ : x_x);
+                 j++ ){
+
+                board[y_][j] = 3;
+                board[y_y][j] = 3;
+            }
+            repaint();
+            updateGL();
+
+            copy_board(board, tempbd);
+        }
+    }
+
+}
+
+void MyPanelOpenGL::mouseReleaseEvent ( QMouseEvent * e )
+{
+    // check if cursor not moved since click beginning
+    //if ((m_mouseClick) && (e->pos() == m_lastPoint)){
+        // do something: for example emit Click signal
+        //emit mouseClickEvent();
+        //x_, y_, x_x, y_y
+
+            //this->capture_section();
+
+
+
+    //cout  << "point: " << x_ << " " << y_ << " " << x_x << " " << y_y;
+    //MessageBox(NULL, NULL, NULL, NULL);
+
+    copy_board(board_cpy_temp, board);
+    if (m_mouseDrag){
+
+        capture_section();
+    }
+
+    x_ = 0;
+    y_ = 0;
+    x_x = 0;
+    y_y = 0;
+    m_mouseClick = false;
+    m_mouseDrag = false;
 
 }
 
@@ -44,12 +143,12 @@ void MyPanelOpenGL::paintGL()
     glLoadIdentity();
     //    static float i(0.01),j(0.007);
 
-    float placement_x = -.86;
-    float placement_y = .86;
-    float space = placement_x;
-    float new_line = placement_y;
+    double placement_x = -.98;
+    double placement_y = .98;
+    double space = placement_x;
+    double new_line = placement_y;
 
-    glPointSize(10);
+    glPointSize(gl_pointsz);
     for(int i = 0; i < WORLDSIZE; i++)
     {
          for(int j = 0; j < WORLDSIZE; j++){
@@ -57,23 +156,45 @@ void MyPanelOpenGL::paintGL()
             if(board[i][j] == 1)
                 glColor3f(0.0f, 0.0f, 2.0f);
             else if(board[i][j] == 0){
-                glColor3f(2.0f, 0.0, 0.0f);
+                glColor3f(0.0f, 0.0, 0.0f);
             }if (board[i][j] == 2){
                 glColor3f(2.0f, 0.0, 1.0f);
-
+            }else if (board[i][j] == 3){
+                glColor3f(2.0f, 2.0f, 2.0f);
             }
-
             glBegin(GL_POINTS);
-                glVertex2f(space, new_line);
+                glVertex2d(space, new_line);
             glEnd();
-            space += .05;
+
+
+
+                    /*
+
+                      glVertex2f(space + ((j - 1) * width),  - ((i - 1) * width));
+                      glVertex2f(space + (j * width), y - ((i - 1) * width));
+                      glVertex2f(space + (j * width), y - (i * width));
+                      glVertex2f(space + ((j - 1) * width), y - (i * width));
+
+
+            glEnd();*/
+            space += .023;
         }
         space = placement_x;
-        new_line -= .05;
+        new_line -= .026;
     }
     new_line = placement_y;
 
+   /* glColor3f(2.0, 2.0, 2.0);
+    glBegin(GL_QUADS);
+
+        glVertex2d(x_/100, y_/100);
+        glVertex2d( x_/100, y_y/100);
+        glVertex2d( x_x/100, y_/100);
+        glVertex2d(x_x/100,y_y/100);
+        //glVertex2d(top_left_x, top_left_y);
+    glEnd();*/
 }
+
 
 void MyPanelOpenGL::keyPressEvent(QKeyEvent *e)
 {
@@ -160,6 +281,7 @@ void MyPanelOpenGL::write_screen(){
 void MyPanelOpenGL::load_screen(){
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Logical Array (*.lar)"));
+
     fstream file_read(fileName.toLocal8Bit().data(), fstream::in);
     load_file(file_read, board);
     file_read.close();
@@ -170,8 +292,7 @@ void MyPanelOpenGL::clear_board(){
 
         init_board(board);
         init_board(board_temp);
-
-
+        process();
 }
 
 void MyPanelOpenGL::start_stop_reset(){
@@ -183,9 +304,18 @@ void MyPanelOpenGL::capture_section(){
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("Logical Array (*.lar)"));
     fstream file_write(fileName.toLocal8Bit().data(), fstream::out);
-    out_file_board(file_write, board, x_, y_, x_x, y_y);
+    out_file_board(file_write, board_cpy_temp, x_, y_, x_x, y_y);
 
     file_write.close();
     emit set_path_box(fileName);
 }
 
+void MyPanelOpenGL::randomize(){
+
+    srand(time(NULL));
+
+    for (int i = 0; i < WORLDSIZE*WORLDSIZE; i++){
+        board[rand()%(WORLDSIZE-3)+1][rand()%(WORLDSIZE-3)+1] = 1;
+    }
+    process();
+}

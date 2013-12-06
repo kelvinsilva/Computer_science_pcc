@@ -2,7 +2,7 @@
 #define GAME_OF_LIFE_H_
 
 #include <iostream>
-#define WORLDSIZE 35
+#define WORLDSIZE 75
 
 using namespace std;
 

@@ -4,7 +4,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowTitle(tr("Hello!"));
+    setWindowTitle(tr("Game of Life"));
     statusBar()->showMessage(QString("Game of Life by Kelvin Silva"));
 }
 

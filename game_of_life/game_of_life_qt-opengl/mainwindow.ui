@@ -7,33 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>551</width>
-    <height>688</height>
+    <height>683</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>140</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Quit</string>
-    </property>
-   </widget>
    <widget class="MyPanelOpenGL" name="widget" native="true">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>180</y>
-      <width>500</width>
-      <height>500</height>
+      <width>511</width>
+      <height>461</height>
      </rect>
     </property>
    </widget>
@@ -155,7 +142,7 @@ Section</string>
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -192,25 +179,12 @@ Section</string>
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>190</x>
       <y>140</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear Board</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>191</x>
-      <y>140</y>
-      <width>171</width>
+      <width>121</width>
       <height>25</height>
      </rect>
     </property>
@@ -218,7 +192,7 @@ Section</string>
      <item>
       <widget class="QPushButton" name="pushButton_7">
        <property name="text">
-        <string>SetDelay (ms):</string>
+        <string>SetDelay:</string>
        </property>
       </widget>
      </item>
@@ -274,7 +248,7 @@ Section</string>
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -300,7 +274,7 @@ Section</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>370</x>
@@ -322,11 +296,42 @@ Section</string>
      </item>
     </layout>
    </widget>
-   <zorder>pushButton</zorder>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>140</y>
+      <width>211</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="pushButton_10">
+       <property name="text">
+        <string>Randomize</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_8">
+       <property name="text">
+        <string>Clear Board</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Quit</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>widget</zorder>
-   <zorder>pushButton_4</zorder>
-   <zorder>pushButton_5</zorder>
-   <zorder>pushButton_2</zorder>
    <zorder>pushButton_3</zorder>
    <zorder>label</zorder>
    <zorder>label_2</zorder>
@@ -336,29 +341,15 @@ Section</string>
    <zorder>line_2</zorder>
    <zorder>line_3</zorder>
    <zorder>line_4</zorder>
-   <zorder>pushButton_6</zorder>
-   <zorder>spinBox</zorder>
-   <zorder>lcdNumber</zorder>
-   <zorder>pushButton_9</zorder>
-   <zorder>lineEdit_5</zorder>
-   <zorder>pushButton_2</zorder>
-   <zorder>pushButton_6</zorder>
-   <zorder></zorder>
-   <zorder>pushButton</zorder>
-   <zorder>pushButton_8</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>pushButton_8</zorder>
    <zorder>pushButton</zorder>
-   <zorder></zorder>
-   <zorder>pushButton_8</zorder>
-   <zorder>pushButton</zorder>
-   <zorder></zorder>
    <zorder>spinBox_2</zorder>
    <zorder>spinBox_3</zorder>
    <zorder>spinBox_4</zorder>
    <zorder>spinBox_5</zorder>
-   <zorder>lineEdit_5</zorder>
-   <zorder>pushButton_2</zorder>
-   <zorder>pushButton_6</zorder>
+   <zorder>pushButton_10</zorder>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -391,6 +382,7 @@ Section</string>
     <slot>clear_board()</slot>
     <slot>start_stop_reset()</slot>
     <slot>capture_section()</slot>
+    <slot>randomize()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -435,8 +427,8 @@ Section</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>463</x>
-     <y>158</y>
+     <x>468</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>533</x>
@@ -547,7 +539,7 @@ Section</string>
    <slot>delay_set(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
+     <x>309</x>
      <y>163</y>
     </hint>
     <hint type="destinationlabel">
@@ -601,6 +593,22 @@ Section</string>
     <hint type="destinationlabel">
      <x>294</x>
      <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_10</sender>
+   <signal>clicked()</signal>
+   <receiver>widget</receiver>
+   <slot>randomize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>175</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>219</y>
     </hint>
    </hints>
   </connection>
