@@ -26,6 +26,7 @@ MyPanelOpenGL::MyPanelOpenGL(QWidget *parent) :
     this->installEventFilter(this);
     iter_ct = 0;
     m_mouseClick = false;
+    m_mouseDrag = false;
     gl_pointsz = 6;
 
 }
