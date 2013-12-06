@@ -22,7 +22,7 @@ public:
     explicit MyPanelOpenGL(QWidget *parent = 0);
 
 signals:
-    // define mouseClick signal
+    // define mouseClick signal not used. here for future coding use
     void mouseClickEvent();
 
 protected:
@@ -43,36 +43,37 @@ public slots:
     bool run();
     bool stop();
 
-    void process();
-    bool eventFilter(QObject *obj, QEvent *event);
-    void write_screen();
-    void load_screen();
-    void clear_board();
-    void start_stop_reset();
-    void capture_section();
-    void randomize();
+    void process();    //runs game of life logic and repaints to screen
+    bool eventFilter(QObject *obj, QEvent *event);  //here for future use
+    void write_screen();    //write board to file
+    void load_screen();    //load logical array file into game of life program
+    void clear_board();    //clear board
+    void start_stop_reset();    //utility function, used for future coding
+    void capture_section();    //capture part of code
+    void randomize();    //make random board
 
 signals:
-    void iterate_inc();
-    void set_path_box(QString);
+    void iterate_inc();    //increment counter
+    void set_path_box(QString);    //set path of string
 
 private:
-    QPoint m_lastPoint, m_pointTwo;
+
+    QPoint m_lastPoint, m_pointTwo; //First click for m_lastPoint, drag coordinate m_pointTwo
     // member variable - flag of click beginning
     bool m_mouseClick;
     bool m_mouseDrag;
 
+    
     int gl_pointsz;
 
     int iter_ct;
 
-    int board_cpy_temp[WORLDSIZE][WORLDSIZE];
-
     QTimer* timer;
+    
     int board[WORLDSIZE][WORLDSIZE] = {};
 
     int board_temp[WORLDSIZE][WORLDSIZE] = {};
-    int subboard[3][3] = {};
+    int subboard[3][3] = {};    //required for game of life logic
 
 
 };
