@@ -114,9 +114,6 @@ void MyPanelOpenGL::mouseReleaseEvent ( QMouseEvent * e )
 
     //cout  << "point: " << x_ << " " << y_ << " " << x_x << " " << y_y;
     //MessageBox(NULL, NULL, NULL, NULL);
-    
-    
-    copy_board(board_cpy_temp, board); 
    
     if (m_mouseDrag){
 
@@ -159,13 +156,13 @@ void MyPanelOpenGL::paintGL()
     {
          for(int j = 0; j < WORLDSIZE; j++){
 
-            if(board[i][j] == 1)
+            if(board[i][j] == 1)    //Alive cell is blue
                 glColor3f(0.0f, 0.0f, 2.0f);
-            else if(board[i][j] == 0){
+            else if(board[i][j] == 0){    //dead cell is black
                 glColor3f(0.0f, 0.0, 0.0f);
-            }if (board[i][j] == 2){
+            }if (board[i][j] == 2){    //borders are pink
                 glColor3f(2.0f, 0.0, 1.0f);
-            }else if (board[i][j] == 3){
+            }else if (board[i][j] == 3){    //drag element is white
                 glColor3f(2.0f, 2.0f, 2.0f);
             }
             glBegin(GL_POINTS);
@@ -183,10 +180,10 @@ void MyPanelOpenGL::paintGL()
 
 
             glEnd();*/
-            space += .023;
+            space += .023; //spacing in between
         }
         space = placement_x;
-        new_line -= .026;
+        new_line -= .026;    //spacing in between
     }
     new_line = placement_y;
 
@@ -240,16 +237,20 @@ bool MyPanelOpenGL::stop()
 
 void MyPanelOpenGL::process()
 {
+        //{game of life logic
         border_reflection(board);
         rule(board, board_temp, subboard);
         border_reflection(board_temp);
         copy_board(board, board_temp);
+        //}game of life logic
+        
+        
         emit iterate_inc();
         repaint();
         updateGL();
 }
 
-
+//does nothing, deprecated
 void MyPanelOpenGL::resizeGL(int width, int height)
 {
     glViewport( 0, 0, (GLint)width,(GLint) height );
@@ -273,21 +274,23 @@ bool MyPanelOpenGL::eventFilter(QObject *obj, QEvent *event)
   return false;
 }
 
-void MyPanelOpenGL::write_screen(){
+void MyPanelOpenGL::write_screen(){    //save all of screen and write to file
 
+    //open file dialog
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File To Directory"), "", tr("Logical Array (*.lar)"));
     fstream file_write(fileName.toLocal8Bit().data(), fstream::out);
     out_file_board(file_write, board);
     file_write.close();
     //out_file_board(fstream &fout, int board[][WORLDSIZE]){
     //out_file_board
-    emit set_path_box(fileName);
+    emit set_path_box(fileName); //change text in the mainwindow text edit
 }
 
 void MyPanelOpenGL::load_screen(){
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Logical Array (*.lar)"));
-
+    
+    //write
     fstream file_read(fileName.toLocal8Bit().data(), fstream::in);
     load_file(file_read, board);
     file_read.close();
@@ -296,11 +299,13 @@ void MyPanelOpenGL::load_screen(){
 
 void MyPanelOpenGL::clear_board(){
 
-        init_board(board);
+        init_board(board);    //clear board and process to display on screen.
         init_board(board_temp);
-        process();
+        repaint();
+        updateGL();
 }
 
+//utility function
 void MyPanelOpenGL::start_stop_reset(){
     if(stop())
         run();
@@ -310,12 +315,13 @@ void MyPanelOpenGL::capture_section(){
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("Logical Array (*.lar)"));
     fstream file_write(fileName.toLocal8Bit().data(), fstream::out);
-    out_file_board(file_write, board_cpy_temp, x_, y_, x_x, y_y);
+    out_file_board(file_write, board, x_, y_, x_x, y_y);
 
     file_write.close();
     emit set_path_box(fileName);
 }
 
+//randomize board contents
 void MyPanelOpenGL::randomize(){
 
     srand(time(NULL));
