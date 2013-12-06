@@ -18,16 +18,16 @@ MyPanelOpenGL::MyPanelOpenGL(QWidget *parent) :
     timer=NULL;
     init_board(board);
     init_board(board_temp);
-    board[8][6] = 1;
+    board[8][6] = 1;    //set initial state as a glider....
     board[8][7] = 1;
     board[8][8] = 1;
     board[7][8] = 1;
     board[6][7] = 1;
-    this->installEventFilter(this);
-    iter_ct = 0;
-    m_mouseClick = false;
+    this->installEventFilter(this); //not sure if needed. test to see if this line needs to be included
+    iter_ct = 0;    //set iteration count to zero
+    m_mouseClick = false;    //mouseclick and drag states
     m_mouseDrag = false;
-    gl_pointsz = 6;
+    gl_pointsz = 6;    //gl point size of each point
 
 }
 
@@ -41,10 +41,10 @@ void MyPanelOpenGL::mousePressEvent ( QMouseEvent * e )
     m_lastPoint = e->pos();
 
 
-        int i = (int) (m_lastPoint.y()/gl_pointsz);
+        int i = (int) (m_lastPoint.y()/gl_pointsz);    //formula to convert coordinate to int array position
         int j = (int) (m_lastPoint.x()/gl_pointsz);
 
-        if (i < WORLDSIZE-1 && j < WORLDSIZE-1 && i > 0 && j > 0){
+        if (i < WORLDSIZE-1 && j < WORLDSIZE-1 && i > 0 && j > 0){    //if cursor is within the boundaries, then set the board cell alive
             board[i][j] = 1;
         }
             repaint();
@@ -54,31 +54,32 @@ void MyPanelOpenGL::mousePressEvent ( QMouseEvent * e )
 void MyPanelOpenGL::mouseMoveEvent( QMouseEvent * e){
 
     if (m_mouseClick){
-        m_mouseDrag = true;
-        m_pointTwo = e-> pos();
-        int i = (int) (m_pointTwo.y()/gl_pointsz);
+    
+        m_mouseDrag = true;    //set mouse drag state to true, used in mouseRelease to see if a use merely clicked or also dragged
+        m_pointTwo = e-> pos();    //store coordinate of mouse movement
+        int i = (int) (m_pointTwo.y()/gl_pointsz);    //convert to array position
         int j = (int) (m_pointTwo.x()/gl_pointsz);
 
-        /*if (i < WORLDSIZE-1 && j < WORLDSIZE-1 && i > 0 && j > 0){
-            board[i][j] = 1;
-        }
-            repaint();
-            updateGL();
-    }*/
-        int tempbd[WORLDSIZE][WORLDSIZE];
-        copy_board(tempbd, board);
-        x_ = m_lastPoint.x()/gl_pointsz;
+     
+        int tempbd[WORLDSIZE][WORLDSIZE]; //make a temporary board to store current board state because we will draw on board
+        copy_board(tempbd, board);    //copy current state to temp board
+        x_ = m_lastPoint.x()/gl_pointsz;    //convert initial click (see above function) AND mouse drag click to array coordiantes
         y_ = m_lastPoint.y()/gl_pointsz;
         x_x = m_pointTwo.x()/gl_pointsz;
         y_y = m_pointTwo.y()/gl_pointsz;
-
+        
+        //we only need two coordinates and their respective x and y values to draw a rectangle
+        
+        //the ternary operator in this loop determines if user is dragginf rom top left to bottom right
+        //or dragging bottom right to top left
+        //We do this to make sure we are going smaller --> bigger incrementation to fill the board with the corrent contents
         if (x_ > 0 && y_ > 0 && x_x > 0 && y_y > 0
             && x_ < WORLDSIZE-1 && x_x < WORLDSIZE-1 && y_ < WORLDSIZE-1 && y_y < WORLDSIZE-1){
             for (int i = ((y_ < y_y) ? y_ : y_y);
                  i < ((y_ > y_y) ? y_ : y_y);
                  i++ ){
 
-                board[i][x_] = 3;
+                board[i][x_] = 3;    //set to three for a white tile. see paintgl function
                 board[i][x_x] = 3;
             }
             for (int j = ((x_ < x_x) ? x_ : x_x);
@@ -88,10 +89,12 @@ void MyPanelOpenGL::mouseMoveEvent( QMouseEvent * e){
                 board[y_][j] = 3;
                 board[y_y][j] = 3;
             }
+            //draw board with rectangle to screen. DO NOT RUN GAME OF LIFE LOGIC. ONLY DRAWING
             repaint();
             updateGL();
-
-            copy_board(board, tempbd);
+            
+            //copy temp board back to board. eliminates the rectangular integer 3 from board.
+            copy_board(board, tempbd);    
         }
     }
 
@@ -111,8 +114,10 @@ void MyPanelOpenGL::mouseReleaseEvent ( QMouseEvent * e )
 
     //cout  << "point: " << x_ << " " << y_ << " " << x_x << " " << y_y;
     //MessageBox(NULL, NULL, NULL, NULL);
-
-    copy_board(board_cpy_temp, board);
+    
+    
+    copy_board(board_cpy_temp, board); 
+   
     if (m_mouseDrag){
 
         capture_section();
