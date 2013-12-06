@@ -2,7 +2,7 @@
 #define GAME_OF_LIFE_H_
 
 #include <iostream>
-#define WORLDSIZE 75
+#define WORLDSIZE 75 //WORLDSIZE is a square. so for example is worldsize is 10, it will be a 10X10 board with 100 members.
 
 using namespace std;
 
