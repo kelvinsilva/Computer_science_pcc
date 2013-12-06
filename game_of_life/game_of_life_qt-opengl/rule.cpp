@@ -1,10 +1,16 @@
 #include "rule.h"
 #include "array_manip.h"
 
-void testit(){cout<<"testing...."<<endl;}
+void testit(){cout<<"testing...."<<endl;} //Dummy funcction
+
 void rule(int board[][WORLDSIZE], int board_temp[][WORLDSIZE], int subboard[][3]){
 
     int neighbor_count = 0;
+    //for every cell in the board...
+    //1. Skip border
+    //2. Capture subboard at i, j
+    //3. count the number of neighbors --> count number of occuring integer 1 in the subboard
+    //4. game of life rules to determine if i, j lives or dies
     for (int i = 0; i < WORLDSIZE; i++){
 
         for (int j = 0; j < WORLDSIZE; j++){
@@ -36,6 +42,7 @@ void rule(int board[][WORLDSIZE], int board_temp[][WORLDSIZE], int subboard[][3]
 
 }
 
+//In the subboard, count how many number 1's there are. return count.
 int count_neighbor(int board[][3]){
 
     int neighbor_count = 0;
