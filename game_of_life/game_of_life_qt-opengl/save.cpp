@@ -1,6 +1,6 @@
 #include "save.h"
 
-//Open_File_Prompt is deprecated with the advent of GUI applications
+//Open_File_Prompt is deprecated with QT
 void Open_File_Prompt(std::fstream &ofn){
 
      char FILE_NAME[512] = {};
@@ -42,6 +42,7 @@ void out_file_board(fstream &fout, int board[][WORLDSIZE], int i, int j, int ii,
     out_file_board(fout, board_out_temp);
 }
 
+//Out file to foutstream
 void out_file_board(fstream &fout, int boardz[][WORLDSIZE]){
 
     for (int r = 0; r < WORLDSIZE; r++){
