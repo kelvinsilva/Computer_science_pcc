@@ -12,7 +12,6 @@ void error(string st);
 void copy_file(int argc, char* argv[]);
 
 int main(int argc, char* argv[])
-//int main(int argc, char argv[][]_
 {
 
     int operation = ret_operation(argc, argv);
@@ -61,6 +60,8 @@ void copy_file(int argc, char* argv[]){
         }
 
         ifstream infile(infile_name, ifstream::binary);
+        infile.unsetf(ios_base::skipws);
+
         ofstream outfile(outfile_name, ofstream::binary|ofstream::trunc);
 
         if(!infile){
@@ -71,7 +72,13 @@ void copy_file(int argc, char* argv[]){
             return;
         }
 
-        outfile << infile.rdbuf();
+        string strline = "";
+
+        while (infile.good()){
+            getline (infile, strline);
+            outfile << strline << endl;
+            strline.clear();
+        }
 
         infile.close();
         outfile.close();
