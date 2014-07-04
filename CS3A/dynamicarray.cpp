@@ -1,5 +1,3 @@
-//Kelvin Silva
-//fixed
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
@@ -22,8 +20,8 @@ void rollDice(int** dice,int rows, int cols);
 void computeOdds(double** odds,  int **rolls, int rows, int cols);
 void printRolls(int **rolls, int rows, int cols);
 void printOdds(double **odds, int rows, int cols);
-void delete2Dint(int **rolls, int rows);
-void delete2Ddouble(double **odds, int rows);
+void delete2DArray(void **rolls, int rows, TYPE which);
+
 
 int main()
 {
@@ -54,8 +52,9 @@ int main()
         printRolls(rolls,size,11);
         computeOdds(odds, rolls, size, 11);
         printOdds(odds,size,11);
-        delete2Dint(rolls,size);
-        delete2Ddouble(odds,size);
+        delete2DArray((void**)rolls, size, INT);
+        delete2DArray((void**)odds,  size, DOUBLE)
+
     }while(again("Do you want to do this again? "));
     return 0;
 }
@@ -68,36 +67,36 @@ void create2DArray(void** &ptr, int rows, int cols, TYPE which)
     float **ptrF;
     char **ptrC;
     bool **ptrB;
-    
+
     long **ptrL;
     short **ptrS;
-    
+
     unsigned int **ptrUI;
     unsigned long **ptrUL;
     unsigned short **ptrUS;
-    unsigned char **ptrsUC;
-    
+    unsigned char **ptrUC;
+
         switch(which)
         {
-            
+
             case LONG   : ptrL = new long*[rows];
                         break;
-                
+
             case SHORT  : ptrS = new short*[rows];
                         break;
-                
+
             case UINT   : ptrUI = new unsigned int*[rows];
                         break;
-                
+
             case ULONG  : ptrUL = new unsigned long*[rows];
                         break;
-                
+
             case USHORT : ptrUS = new unsigned short*[rows];
                         break;
-                
-            case UCHAR  : ptrU = new unsigned char*[rows];
+
+            case UCHAR  : ptrUC = new unsigned char*[rows];
                         break;
-                
+
             case INT     : ptrI = new int*[rows];
                            break;
 
@@ -119,31 +118,31 @@ void create2DArray(void** &ptr, int rows, int cols, TYPE which)
         for(int i = 0; i < rows; i++)
             switch(which)
             {
-            
-                case LONG   : ptrL[i] = new int[cols]();
+
+                case LONG   : ptrL[i] = new long[cols]();
                             ptr = (void**)ptrI;
                             break;
-                    
-                case SHORT  : ptrS[i] = new int[cols]();
+
+                case SHORT  : ptrS[i] = new short[cols]();
                             ptr = (void**)ptrI;
                             break;
-                    
-                case UINT   : ptrUI[i] = new int[cols]();
+
+                case UINT   : ptrUI[i] = new unsigned int[cols]();
                             ptr = (void**)ptrI;
                             break;
-                    
-                case ULONG  : ptrUL[i] = new int[cols]();
+
+                case ULONG  : ptrUL[i] = new unsigned long[cols]();
                             ptr = (void**)ptrI;
                             break;
-                    
-                case USHORT : ptrUS[i] = new int[cols]();
+
+                case USHORT : ptrUS[i] = new unsigned short[cols]();
                               ptr = (void**)ptrI;
                             break;
-                    
-                case UCHAR  : ptrU[i] = new int[cols]();
+
+                case UCHAR  : ptrUC[i] = new unsigned char[cols]();
                               ptr = (void**)ptrI;
-                            break;            
-                
+                            break;
+
                 case INT     : ptrI[i] = new int[cols](); //with parentheses initialize all elements to zero
                                ptr = (void**)ptrI;
                                break;
@@ -262,16 +261,66 @@ void printOdds(double **odds, int rows, int cols)
 
 }
 
-void delete2Dint(int **rolls, int rows)
-{
-    for(int i = 0; i < rows; i++)
-        delete [] rolls[i];
-    delete [] rolls;
+void delete2DArray(void * * rolls, int rows, TYPE which) {
+    switch (which) {
+        case LONG:
+            long ** dptr = (  long**) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case SHORT:
+            short ** dptr = ( short** ) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case UINT:
+            unsigned int ** dptr = (  unsigned int**) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case ULONG:
+            unsigned long ** dptr = (  unsigned long**) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case USHORT:
+            unsigned short ** dptr = (  unsigned short**) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case UCHAR:
+            unsigned char ** dptr = (  unsigned char**) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case INT:
+            int ** dptr = ( ** int) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case DOUBLE:
+            double ** dptr = ( ** double) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case FLOAT:
+            float ** dptr = ( ** float) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case CHAR:
+            char ** dptr = ( ** char) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        case BOOL:
+            bool ** dptr = ( ** bool) rolls;
+            for (int i = 0; i < rows; i++) delete[] dptr[i];
+            delete[] dptr;
+            break;
+        default:
+            cout << "ERROR in deleting array" << endl;
+            exit(1);
+    }
 }
 
-void delete2Ddouble(double **odds, int rows)
-{
-    for(int i = 0; i < rows; i++)
-        delete [] odds[i];
-    delete [] odds;
-}
