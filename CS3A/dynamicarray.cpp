@@ -591,3 +591,149 @@ double getDecimal(mixedNumber frac){
     return ret_val.num/ret_val.denom;
 }
 
+/////////////////////////////////////array union
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+union pointers
+{
+    int **ptrI;
+    char **ptrC;
+    double **ptrD;
+
+    unsigned char **ptrUC;
+    unsigned int **ptrUI;
+    unsigned double **ptrUD;
+
+    long **ptrL;
+    short **ptrS;
+    unsigned long **ptrUL;
+    unsigned short **ptrUS;
+
+};
+
+enum TYPE {INT, DOUBLE, CHAR, UCHAR, UINT, UDOUBLE, LONG, SHORT, ULONG, USHORT};
+pointers create2Darray(int rows, int cols,  TYPE type);
+
+int main()
+{
+    int **myList;
+    myList = create2Darray(5,5, INT).ptrI;
+    for(int i = 0; i < 5; i++)
+    {
+        for(int j = 0; j < 5; j++)
+            cout<<myList[i][j];
+        cout<<endl;
+    }
+    return 0;
+}
+
+pointers create2Darray( int rows, int cols, TYPE type)
+{
+    pointers ptr;
+    switch(type)
+    {
+        case INT:
+                    ptr.ptrI = new int*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrI[i] = new int[cols]();
+
+                    }
+                    return ptr;
+                    break;
+        case DOUBLE:
+                    ptr.ptrD = new double*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrD[i] = new double[cols]();
+
+                    }
+                    return ptr;
+                    break;
+        case CHAR:
+                    ptr.ptrC = new char*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrC[i] = new char[cols]();
+
+                    }
+                    return ptr;
+                    break;
+        case UCHAR:
+                    ptr.ptrUC = new unsigned char*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrUC[i] = new unsigned char[cols]();
+
+                    }
+                    return ptr;
+                    break;
+        case UINT:
+                    ptr.ptrUI = new unsigned int*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrUI[i] = new unsigned int[cols]();
+
+                    }
+                    return ptr;
+                    break;
+
+        case UDOUBLE:
+                    ptr.ptrUD = new unsigned double*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrUD[i] = new unsigned double[cols]();
+
+                    }
+                    return ptr;
+                    break;
+
+       case LONG:
+                    ptr.ptrL = new long*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrL[i] = new long[cols]();
+
+                    }
+                    return ptr;
+                    break;
+
+      case SHORT:
+                    ptr.ptrS = new short*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrS[i] = new short[cols]();
+
+                    }
+                    return ptr;
+                    break;
+
+      case ULONG:
+                    ptr.ptrUL = new unsigned long*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrUL[i] = new unsigned long[cols]();
+
+                    }
+                    return ptr;
+                    break;
+
+     case USHORT:
+                    ptr.ptrUS = new unsigned short*[rows];
+                    for(int i = 0; i < rows; i++)
+                    {
+                        ptr.ptrUS[i] = new unsigned short[cols]();
+
+                    }
+                    return ptr;
+                    break;
+    }
+}
+
+
