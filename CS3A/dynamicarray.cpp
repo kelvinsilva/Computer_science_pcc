@@ -324,3 +324,270 @@ void delete2DArray(void * * rolls, int rows, TYPE which) {
     }
 }
 
+/////////mixed
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <sstream>
+
+#include "mixednumber.h"
+
+
+using namespace std;
+
+bool getLine(string &line);
+void getInput(const string &line, mixedNumber &x, char &op,mixedNumber &y);
+void trim(string &line);
+mixedNumber getValue(string &line);
+void output(mixedNumber x, char op, mixedNumber y, mixedNumber z);
+void calculate(const mixedNumber &x, char op, const mixedNumber &y, mixedNumber &z);
+mixedNumber add(const mixedNumber &x, const mixedNumber &y);
+mixedNumber sub(const mixedNumber &x, const mixedNumber &y);
+mixedNumber mult(const mixedNumber &x, const mixedNumber &y);
+mixedNumber div(const mixedNumber &x, const mixedNumber &y);
+mixedNumber getImproper(mixedNumber frac);
+double getDecimal(mixednumber frac);
+
+
+int main()
+{
+    mixedNumber x, y, z;
+    char op;
+    string line;
+    while(getLine(line))
+    {
+        getInput(line, x, op, y);
+        //calculate(x,op,y,z);
+        //output(x,op,y,z);
+        z = getImproper(x);
+        cout << "whole: " << z.whole << " numer: " << z.num << " denom: " << z.denom;
+    }
+    return 0;
+}
+
+mixedNumber add(const mixedNumber &x, const mixedNumber &y)
+{
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num)*y.denom + (y.whole*y.denom+y.num)*x.denom;
+    ans.denom = x.denom * y.denom;
+    ans.reduce();
+    return ans;
+}
+
+mixedNumber sub(const mixedNumber &x, const mixedNumber &y)
+{
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num)*y.denom - (y.whole*y.denom+y.num)*x.denom;
+    ans.denom = x.denom * y.denom;
+    ans.reduce();
+    return ans;
+}
+
+mixedNumber mult(const mixedNumber &x, const mixedNumber &y)
+{
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num) * (y.whole*y.denom+y.num);
+    ans.denom = x.denom * y.denom;
+    ans.reduce();
+    return ans;
+}
+
+mixedNumber div(const mixedNumber &x, const mixedNumber &y)
+{
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num) * y.denom;
+    ans.denom = x.denom * (y.whole*y.denom+y.num);
+    ans.reduce();
+    return ans;
+}
+
+mixedNumber POWE(const mixedNumber &x, const mixedNumber &y){
+    
+    mixedNumber ans;
+    ans.num = pow(x.num, y.num);
+    ans.denom = pow(x.denom, y.num);
+    y.num = 1;
+    
+    double decans, decy;
+    decans = getDecimal(ans);
+    decy = getDecimal(decy);
+    double answer = pow(decans, decy);
+    
+    mixedNumber ret_val;
+
+ 
+}
+
+
+
+void calculate(const mixedNumber &x, char op, const mixedNumber &y, mixedNumber &z)
+{
+    switch(op)
+    {
+        case '+' : z = add(x,y);
+                   break;
+        case '-' : z = sub(x, y);
+                   break;
+        case '*' : z = mult(x, y);
+                   break;
+        case '/' : z = div(x, y);
+                    break;
+        case '^' : //z = POW(x, y);
+                    break;
+        default  : cout<<"unknown operator!"<<endl;
+    }
+}
+
+
+void output(mixedNumber x, char op, mixedNumber y, mixedNumber z)
+{
+    x.output();
+    cout<<" "<<op<<" ";
+    y.output();
+    cout<<" =  ";
+    z.output();
+    cout<<endl;
+}
+
+
+void trim(string &line)
+{
+    while(line[0] == ' ')
+        line.erase(0,1);
+    while(line[line.size()-1] == ' ')
+        line.erase(line.size()-1);
+}
+
+bool getLine(string &line)
+{
+    cout<<"Input: ";
+    getline(cin,line);
+    trim(line);
+    return line != "";
+}
+
+
+mixedNumber getValue(string &line)
+{
+    stringstream ss;
+    char junk;
+    mixedNumber x;
+    x.whole = 0;
+    x.num = 0;
+    x.denom = 1;
+    ss<<line;
+    if(line.find(' ') < line.size()) //Do I have a true mixed number
+        ss>>x.whole>>x.num>>junk>>x.denom;//Yes, read in
+    else
+        if(line.find('/') < line.size()) //If not, then do I have just a fraction
+        {
+            x.whole = 0;
+            ss>>x.num>>junk>>x.denom; //If so, read it in
+        }
+        else //If not, all I have is a whole number, so read it in.
+        {
+            x.num = 0;
+            x.denom = 1;
+            ss>>x.whole;
+        }
+    return x;
+}
+
+void getInput(const string &line, mixedNumber &x, char &op,mixedNumber &y)
+{
+    char data;
+    string first, second;
+    stringstream ss;
+    int pos = line.find_first_of("+*-");
+    if(pos < line.size())
+    {
+        op = line[pos];
+        first = line.substr(0,pos);
+        x = getValue(first);
+        second = line.substr(pos+1);
+        y = getValue(second);
+    }
+    else
+    {
+        char junk;
+        int num1, num2, num3;
+        ss<<line;
+        ss>>num1;
+        if(ss.peek() == '/') // Dealing with a pure fraction
+        {
+            ss>>junk>>num2;
+            x.whole = 0;
+            x.num = num1;
+            x.denom = num2;
+            x.reduce();
+        }
+        else
+            if(ss.peek() == ' ')
+            {
+                ss>>num2>>junk>>num3;
+                x.whole = num1;
+                x.num = num2;
+                x.denom = num3;
+                x.reduce();
+            }
+            else
+            {
+                x.whole = num1;
+                x.num = 0;
+                x.denom = 1;
+            }
+        ss>>op>>num1;
+        if(ss.peek() == '/')
+        {
+            ss>>junk>>num2;
+            y.whole = 0;
+            y.num = num1;
+            y.denom = num2;
+            y.reduce();
+        }
+        else
+            if(ss.peek() == ' ')
+            {
+                ss>>num2>>junk>>num3;
+                y.whole = num1;
+                y.num = num2;
+                y.denom = num3;
+                y.reduce();
+            }
+            else
+            {
+                y.whole = num1;
+                y.num = 0;
+                y.denom = 1;
+            }
+
+    }
+}
+
+mixedNumber getImproper(mixedNumber frac)
+{
+
+
+    if (frac.whole == 0){
+        mixedNumber ret_val;
+            ret_val.whole = 0;
+            ret_val.num = frac.num;
+            ret_val.denom = frac.denom;
+        return ret_val;
+    }else {
+        mixedNumber ret_val;
+           ret_val.whole = 0;
+           ret_val.num = frac.whole*frac.denom;
+           ret_val.num += frac.num;
+           ret_val.denom = frac.denom;
+       return ret_val;
+
+    }
+
+}
+
+double getDecimal(mixedNumber frac){
+    mixedNumber ret_val = getImproper(frac);
+    return ret_val.num/ret_val.denom;
+}
+
