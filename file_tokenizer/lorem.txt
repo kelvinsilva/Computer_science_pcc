@@ -1,8 +1,0 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultrices elementum rhoncus. 
-Etiam rutrum sed ante non aliquam. Vestibulum ac leo nec nulla dapibus imperdiet. 
-Mauris convallis felis nulla. Vestibulum lacinia ante vitae nisi gravida porttitor. 
-Nullam eget augue elit. Etiam tincidunt lacinia lacus, in cursus dolor tristique a. 
-Nullam et lectus sed nisl commodo mattis. Pellentesque quis fermentum quam. 
-Interdum et malesuada fames ac ante ipsum primis in faucibus. 
-Aliquam auctor augue vitae turpis volutpat vulputate. 
-Nullam quis diam laoreet, sagittis orci a, rutrum diam. 
