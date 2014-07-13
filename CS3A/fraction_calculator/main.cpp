@@ -1,10 +1,16 @@
+//Kelvin Silva
+//The fraction parsing module was rewritten, and is inside parse_frac.cpp/h as well as POWE function added for powers
+//Can only do calculation between two numbers and/or mixed fractions
+//The add, sub, mult, div and POWE functions were not rewritten for negative numbers. All rules of negative numbers are followed naturally.
+//If the fraction is typed as -5 1/6, then the program multiplies the numerator (1 in 1/6) by -1 if whole number is negative.
+
 #include <iostream>
 #include <cstdlib>
 #include <string>
 #include <sstream>
 
 #include "mixednumber.h"
-
+#include "parse_frac.h"
 
 using namespace std;
 
@@ -19,13 +25,14 @@ mixedNumber add(const mixedNumber &x, const mixedNumber &y);
 mixedNumber sub(const mixedNumber &x, const mixedNumber &y);
 mixedNumber mult(const mixedNumber &x, const mixedNumber &y);
 mixedNumber div(const mixedNumber &x, const mixedNumber &y);
-mixedNumber POWE(const mixedNumber &x, const mixedNumber &y);
+mixedNumber POWE(const mixedNumber &x, const mixedNumber &y); //Power function written
 
-mixedNumber getImproper(mixedNumber frac);
-mixedNumber double_to_fraction(double dec);
 
+mixedNumber getImproper(mixedNumber frac); //Auxiliarry function to make power calculation easier
+mixedNumber double_to_fraction(double dec); //Auxiliarry function to make power calculation easier
 double getDecimal(mixedNumber frac);
-int get_num_of_places(double dec);
+int get_num_of_places(double dec); //Used in converting a double to a fraction
+
 
 
 int main()
@@ -35,11 +42,12 @@ int main()
     string line;
     while(getLine(line))
     {
-        getInput(line, x, op, y);
+
+        op = parse_line(line, x, y, op) ? op : -1; //Parse line new module rewritten. Assign to operator value of -1 if function returns 0 (fail to parse)
+                                                    //Else maintain original value of op.
+                                                    cout << "\nop: " << op << "\n";
         calculate(x,op,y,z);
         output(x,op,y,z);
-        //z = getImproper(y);
-        //cout << "whole: " << z.whole << " numer: " << z.num << " denom: " << z.denom;
     }
     return 0;
 }
@@ -108,15 +116,11 @@ mixedNumber POWE(const mixedNumber &x, const mixedNumber &y){
     mixedNumber y_temp = getImproper(y);
 
 
-    cout << "x_temp num: " << x_temp.num << endl;
-    cout << "y_temp.num: " << y_temp.num << endl;
-
     mixedNumber power_root = getImproper(y);
     power_root.whole = 0;
     power_root.num = 1;
 
     double dec_to_raise_root = getDecimal(power_root);
-    cout << "dec to raise roodt" << dec_to_raise_root << endl;
 
     double numer_temp = pow(x_temp.num, dec_to_raise_root);
     double denom_temp = pow(x_temp.denom, dec_to_raise_root);
@@ -207,44 +211,6 @@ bool getLine(string &line)
 }
 
 
-mixedNumber getValue(string &line)
-{
-    stringstream ss;
-    char junk;
-    mixedNumber x;
-    x.whole = 0;
-    x.num = 0;
-    x.denom = 1;
-    ss<<line;
-    if(line.find(' ') < line.size()) //Do I have a true mixed number
-        ss>>x.whole>>x.num>>junk>>x.denom;//Yes, read in
-    else
-        if(line.find('/') < line.size()) //If not, then do I have just a fraction
-        {
-            x.whole = 0;
-            ss>>x.num>>junk>>x.denom; //If so, read it in
-        }
-        else //If not, all I have is a whole number, so read it in.
-        {
-            x.num = 0;
-            x.denom = 1;
-            ss>>x.whole;
-        }
-    return x;
-}
-
-void getInput(const string &line, mixedNumber &x, char &op,mixedNumber &y)
-{
-    char data;
-    string first, second;
-    stringstream ss;
-    int num1 = 0, num2 = 0, num3 = 0, num4 = 0, num5 = 0, num6 = 0;
-
-    ss << line;
-    ss >> num1;
-
-
-}
 
 double getDecimal(mixedNumber frac){
     mixedNumber ret_val = getImproper(frac);
@@ -280,5 +246,26 @@ mixedNumber double_to_fraction(double dec){
         return temp;
     }
 
+
+}
+
+mixedNumber getImproper(mixedNumber frac)
+{
+
+    if (frac.whole == 0){
+        mixedNumber ret_val;
+            ret_val.whole = 0;
+            ret_val.num = frac.num;
+            ret_val.denom = frac.denom;
+        return ret_val;
+    }else {
+        mixedNumber ret_val;
+           ret_val.whole = 0;
+           ret_val.num = frac.whole*frac.denom;
+           ret_val.num += frac.num;
+           ret_val.denom = frac.denom;
+       return ret_val;
+
+    }
 
 }

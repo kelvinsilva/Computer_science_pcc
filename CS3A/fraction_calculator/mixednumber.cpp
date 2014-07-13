@@ -10,7 +10,7 @@ mixedNumber::mixedNumber()
 void mixedNumber::reduce()
 {
     int div, newNum;
-    newNum = denom * whole + num;
+    newNum = abs(denom * whole + num);
     div = gcd(newNum, denom);
     newNum /= div;
     denom /= div;
