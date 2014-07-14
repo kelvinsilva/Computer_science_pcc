@@ -153,7 +153,7 @@ istream& operator>>(istream &in, safeArray &list)
             getline(in,line);
 
             ss<<line.substr(line.find('=')+2);
-            ss>>line[i];
+            ss>>list[i];
 
             ss.str("");
             ss.clear();
