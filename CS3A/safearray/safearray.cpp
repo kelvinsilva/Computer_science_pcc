@@ -1,3 +1,4 @@
+
 #include "safearray.h"
 
 safeArray::safeArray(string n, int s)
@@ -75,7 +76,13 @@ void safeArray::resize(int s)
         throw INVALID;
 
     nukem();
-    makeNewList(s);
+    try{
+        makeNewList(s);
+    }
+    catch(ERRORS err){
+        cerr << "Error in Making new list, exiting program.";
+        exit(1);
+    }
 }
 
 void safeArray::makeNewList(int s)
@@ -84,7 +91,9 @@ void safeArray::makeNewList(int s)
         throw INVALID;
 
     size = s;
-    list = new int[s];
+
+        list = new int[s];
+
     clear();
 }
 
