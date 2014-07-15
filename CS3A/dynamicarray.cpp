@@ -737,3 +737,271 @@ pointers create2Darray( int rows, int cols, TYPE type)
 }
 
 
+////////////////////////////////////////////////
+//mixednumbers.h
+
+#ifndef MIXEDNUMBERS_H
+#define MIXEDNUMBERS_H
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+class mixedNumber{
+
+
+
+    private:
+
+        long whole, num, denom;
+        long numImproper, denomImproper;
+
+        double decimal_val;
+
+        void decimal_val_set();
+        void setImproper();
+
+    public:
+
+        mixedNumber();
+
+        void reduce();
+        void output();
+
+
+
+        double getImproper();
+
+        long gcd(int x, int y);
+        long getWhole();
+        long getNumerator();
+        long getDenominator();
+
+
+        void setWhole();
+        void setNumerator();
+        void setDenominator();
+
+
+
+        friend mixedNumber operator+ (mixedNumber &x, mixedNumber &y);
+        friend mixedNumber operator- (mixedNumber &x, mixedNumber &y);
+        friend mixedNumber operator* (mixedNumber &x, mixedNumber &y);
+        friend mixedNumber operator/ (mixedNumber &x, mixedNumber &y);
+        friend mixedNumber operator^ (mixedNumber &x, mixedNumber &y);
+
+
+
+
+};
+
+
+
+#endif // MIXEDNUMBERS_H
+
+/////////////////
+//.cpp
+
+#include "mixednumbers.cpp"
+
+mixedNumber::mixedNumber()
+{
+    whole = 0;
+    num = 0;
+    denom = 1;
+}
+
+void mixedNumber::reduce()
+{
+    int div, newNum;
+    newNum = abs(denom * whole + num);
+    div = abs(gcd(newNum, denom));
+    newNum /= div;
+    denom /= div;
+    whole = newNum / denom;
+    num = newNum % denom;
+}
+
+long mixedNumber::gcd(int p, int q)
+{
+    return q == 0 ? p : gcd(q, p%q);
+}
+
+/*
+int mixedNumber::gcd(int p, int q)
+{
+    int r;
+    while((r = p%q) != 0)
+    {
+        p = q;
+        q = r;
+    }
+    return q;
+)
+
+    return
+}
+*/
+
+void mixedNumber::output()
+{
+    if(whole == 0 && num == 0)
+        cout<<0;
+    else
+      if(whole == 0)
+        cout<<num<<"/"<<denom;
+      else
+         if(num == 0)
+                cout<<whole;
+         else
+                cout<<whole<<" "<<num<<"/"<<denom;
+}
+
+long mixedNumber::getWhole(){
+    return whole;
+
+}
+
+long mixedNumber getNumerator(){
+    return num;
+}
+
+long mixedNumber::getDenominator(){
+    return denom;
+}
+
+void mixedNumber::setWhole(long w){
+    whole = w;
+}
+
+void mixedNumber::setNumerator(long q){
+    num = q;
+}
+
+void mixedNumber::setDenominator(long q){
+    denom = q;
+}
+
+mixedNumber mixedNumber::operator+ (mixedNumber &x, mixedNumber &y){
+
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num)*y.denom + (y.whole*y.denom+y.num)*x.denom;
+    ans.denom = x.denom * y.denom;
+    ans.reduce();
+
+    return ans;
+}
+
+mixedNumber mixedNumber::operator- (mixedNumber &x, mixedNumber &y){
+
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num)*y.denom - (y.whole*y.denom+y.num)*x.denom;
+    ans.denom = x.denom * y.denom;
+    ans.reduce();
+    return ans;
+}
+
+mixedNumber mixedNumber::operator* (mixedNumber &x, mixedNumber &y){
+
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num) * (y.whole*y.denom+y.num);
+    ans.denom = x.denom * y.denom;
+    ans.reduce();
+    return ans;
+}
+
+mixedNumber mixedNumber::operator/ (mixedNumber &x, mixedNumber &y){
+
+    mixedNumber ans;
+    ans.num = (x.whole*x.denom+x.num) * y.denom;
+    ans.denom = x.denom * (y.whole*y.denom+y.num);
+    ans.reduce();
+    return ans;
+}
+
+mixedNumber mixedNumber::operator^ (mixedNumber &x, mixedNumber &y){
+
+    mixedNumber x_temp = getImproper(x);
+    mixedNumber y_temp = getImproper(y);
+
+
+    mixedNumber power_root = getImproper(y);
+    power_root.whole = 0;
+    power_root.num = 1;
+
+    double dec_to_raise_root = getDecimal(power_root);
+
+    double numer_temp = pow(x_temp.num, dec_to_raise_root);
+    double denom_temp = pow(x_temp.denom, dec_to_raise_root);
+
+    double frac_to_convert = numer_temp / denom_temp;
+
+    frac_to_convert = pow(frac_to_convert, y_temp.num);
+
+    mixedNumber ret_val = double_to_fraction(frac_to_convert);
+
+    return ret_val;
+}
+
+double mixedNumber::decimal_val_set(){
+
+}
+
+void mixedNumber::setImproper(){
+
+    if (whole == 0){
+
+                numImproper = num;
+                denomImproper = denom;
+        }else {
+
+               numImproper = whole*denom;
+               numImproper += num;
+               denomImproper = denom;
+        }
+}
+
+mixedNumber mixedNumber::getImproper(){
+    mixedNumber mix();
+
+    mix.setWhole(0);
+    mix.setNumerator(0);
+    mix.setDenominator(0);
+
+}
+
+/*double mixedNumber::decimal_val_set(){
+
+    if (dec > 0){
+
+        mixedNumber temp;
+        temp.whole = trunc(dec);
+        double decDecimal = abs(trunc(dec) - dec);
+        int number_to_raise = get_num_of_places(decDecimal);
+        int numerator = decDecimal * pow(10, number_to_raise);
+        int denominator =  pow(10, number_to_raise);
+
+        temp.num = numerator;
+        temp.denom = denominator;
+        return temp;
+
+    }else {
+        mixedNumber temp;
+        temp.whole = trunc(dec);
+        double decDecimal = abs(trunc(dec) - dec);
+        int number_to_raise = get_num_of_places(decDecimal);
+        int numerator = decDecimal * pow(10, number_to_raise) * -1;
+        int denominator =  pow(10, number_to_raise);
+
+        temp.num = numerator;
+        temp.denom = denominator;
+        return temp;
+    }
+
+}*/
+
+
+//////
