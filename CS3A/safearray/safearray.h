@@ -1,10 +1,3 @@
-#ifndef SAFEARRAY_H
-#define SAFEARRAY_H
-
-#include <iostream>
-#include <cstdlib>
-#include <fstream>
-#include <string>
 #include <sstream>
 
 using namespace std;
