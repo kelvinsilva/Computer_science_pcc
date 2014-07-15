@@ -1,10 +1,18 @@
-#include "twodarray.h"
 
+#include "twodarray.h"
 
 two2Darray::two2Darray(string n, int r , int c)
 {
     name = n;
-    makeNewList(r,c);
+
+    try    {
+        makeNewList(r,c);
+    }
+    catch(ERROR err){
+        cerr << "Index r, c now valid values of input";
+        exit(1);
+    }
+
     rows = r;
     cols = c;
 }
@@ -33,7 +41,13 @@ safeArray& two2Darray::operator[](int index)
 {
     if(index < 0 || index > rows -1)
         throw INVALID;
-    return list[index];
+    try {
+        return list[index];
+    }
+    catch(int ind){
+        cerr << "Index is invalid! ";
+        exit(1);
+    }
 }
 
 void two2Darray::resize(int r, int c)
@@ -41,7 +55,14 @@ void two2Darray::resize(int r, int c)
     if(r < 0 || c < 0)
         throw NOTVALID;
     nukem();
-    makeNewList(r,c);
+
+    try{
+        makeNewList(r,c);
+    }
+    catch (...){
+        cerr << "make list failed, exiting.";
+        exit(1);
+    }
 }
 
 void two2Darray::clear()
