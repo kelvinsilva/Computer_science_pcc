@@ -1,4 +1,3 @@
-
 #ifndef TWO2DARRAY_H
 #define TWO2DARRAY_H
 #include <iostream>
@@ -17,7 +16,8 @@ class two2Darray
 {
     public:
 
-        two2Darray(string name = "", int r = 5, int c = 5);
+
+        two2Darray(string name = "Test", int r = 5, int c = 5);
         ~two2Darray();
 
         two2Darray(const two2Darray &other);
