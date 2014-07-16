@@ -1,5 +1,5 @@
 
-#include "mixednumber.h"
+#include "mixedNumbers.h"
 
 mixedNumber::mixedNumber()
 {
@@ -36,10 +36,12 @@ mixedNumber::~mixedNumber(){
 void mixedNumber::reduce()
 {
     int div, newNum;
-    newNum = denom * whole + num;
-    div = gcd(newNum, denom);
-    newNum /= div;
-    denom /= div;
+    newNum =  denom * whole + num;
+    div = gcd(abs(newNum), denom);
+    newNum = newNum/ div;
+    denom = denom / div;
+
+    denom = abs(denom);
     whole = newNum / denom;
     num = newNum % denom;
 }
@@ -76,7 +78,7 @@ void mixedNumber::output()
          if(num == 0)
                 cout<<whole;
          else
-                cout<<whole<<" "<<num<<"/"<<denom;
+                cout<<whole<<" "<<abs(num)<<"/"<<denom;
 }
 
 long mixedNumber::getWhole() const{
@@ -188,11 +190,10 @@ mixedNumber mixedNumber::getImproper() const{
 
 mixedNumber& mixedNumber::operator+=(const mixedNumber &y){
 
-
     this->num = (this->whole*this->denom+this->num)*y.denom + (y.whole*y.denom+y.num)*this->denom;
     this->setDenominator( this->denom * y.denom);
+    this->whole = 0;
     this->reduce();
-
 
     return *this;
 
@@ -202,6 +203,7 @@ mixedNumber& mixedNumber::operator-=(const mixedNumber &y){
 
     this->num = (this->whole*this->denom+this->num)*y.denom - (y.whole*y.denom+y.num)*this->denom;
     this->setDenominator( this->denom * y.denom);
+    this->whole = 0;
     this->reduce();
 
 
@@ -212,6 +214,7 @@ mixedNumber& mixedNumber::operator*=(const mixedNumber &y){
 
     this->num = (this->whole*this->denom+this->num) * (y.whole*y.denom+y.num);
     this->setDenominator( this->denom * y.denom );
+    this->whole = 0;
     this->reduce();
 
     return *this;
@@ -222,6 +225,7 @@ mixedNumber& mixedNumber::operator/=(const mixedNumber &y){
     this->num = (this->whole*this->denom+this->num) * y.denom;
     this->setDenominator( this->denom * (y.whole*y.denom+y.num) );
     this->reduce();
+    this->whole = 0;
     return *this;
 
 }
@@ -244,7 +248,7 @@ mixedNumber operator+ (mixedNumber x, const mixedNumber &y){
 
 mixedNumber operator- (mixedNumber x, const mixedNumber &y){
 
-    x += y;
+    x -= y;
     return x;
 }
 
@@ -298,20 +302,24 @@ istream& operator>>(istream &in, mixedNumber &x)
         num = whole;
         whole = 0;
         in>>junk>>denom;
+
     }
     else
     {
         char space = in.get();
-        if(in.peek() >='0' && in.peek() <= '9')
+        if(in.peek() >='0' && in.peek() <= '9' || in.peek() == '-' || in.peek() == '+')
         {
             in >>num>>junk>>denom;
         }
-        else
+        else{
             in.unget();
+            cout << "\nsyntax error\n";
+        }
     }
+
     x.whole = whole;
-    x.num = num;
-    x.denom = denom;
+    x.num = whole < 0 ? abs(num)*-1 : abs(num);
+    x.denom = abs(denom);
     x.reduce();
     return in;
 }
@@ -327,7 +335,7 @@ ostream& operator<<(ostream &out, const mixedNumber &x)
        if(x.num == 0)
            out<<x.whole;
        else
-           out<<x.whole<<" "<<x.num<<"/"<<x.denom;
+           out<<x.whole<<" "<<abs(x.num)<<"/"<<x.denom;
    return out;
 }
 

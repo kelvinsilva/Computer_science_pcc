@@ -2,9 +2,6 @@
 //To use  this class, if you want a negative number you can either assign manually negative whole number and negative numerator
 //Or you can use all positive numerator, positive whole number and use true and false for sign bit on the third constructor.
 //The use of signbit or manually setting the numbers does not affect the behavior of the class.
-
-
-
 #ifndef MIXEDNUMBERS_H
 #define MIXEDNUMBERS_H
 
@@ -15,10 +12,7 @@
 
 using namespace std;
 
-
 class mixedNumber{
-
-
 
     private:
 
@@ -66,15 +60,10 @@ class mixedNumber{
 
         friend istream& operator>>(istream &in, mixedNumber &x);
         friend ostream& operator<<(ostream &out, const mixedNumber &x);
-                                 
-        
+
+
         mixedNumber& operator= (const mixedNumber& y);
         mixedNumber& operator= (double doub);
-
-
-
-
-
 
 
 };

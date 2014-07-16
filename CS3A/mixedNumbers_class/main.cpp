@@ -6,13 +6,23 @@ using namespace std;
 int main()
 {
 
-    mixedNumber sup( 2, 3, 4);
-    mixedNumber he(2, 4, 5);
+    mixedNumber sup(true , 7, 1, 6);
+    mixedNumber he(false, 5, 1, 6);
     mixedNumber fg;
 
+    cout << "adder: ";
+    //cin >> he >> sup;
+    fg = sup ^ he;
+    cout << fg;
 
-    fg = (sup / he);
-    fg.output();
+
+    //cout << "\n\n";
+    //sup.output();
+    //cout << "\n\n";
+    //cout << "sup numerator: "  << sup.getNumerator() <<endl;
+    //cout << "sup denominator: " << sup.getDenominator() << endl;
+    //cout << "sup whole: " << sup.getWhole() << endl;
+
 
     return 0;
 }
