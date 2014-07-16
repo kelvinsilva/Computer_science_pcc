@@ -35,15 +35,15 @@ class mixedNumber{
         void reduce();
         void output();
 
-        mixedNumber getImproper();
+        mixedNumber getImproper() const;
 
         long gcd(int x, int y);
 
-        double getDecimalVal();
+        double getDecimalVal() const;
 
-        long getWhole();
-        long getNumerator();
-        long getDenominator();
+        long getWhole() const;
+        long getNumerator() const;
+        long getDenominator() const;
 
 
         void setWhole(long w);
@@ -51,16 +51,27 @@ class mixedNumber{
         void setDenominator(long q);
 
 
+        mixedNumber& operator+=(const mixedNumber &rhs);
+        mixedNumber& operator-=(const mixedNumber &rhs);
+        mixedNumber& operator*=(const mixedNumber &rhs);
+        mixedNumber& operator/=(const mixedNumber &rhs);
+        mixedNumber& operator^=(const mixedNumber &rhs);
 
-        friend mixedNumber operator+ ( const mixedNumber &x, const mixedNumber &y);
-        friend mixedNumber operator- (mixedNumber &x, mixedNumber &y);
-        friend mixedNumber operator* (mixedNumber &x, mixedNumber &y);
-        friend mixedNumber operator/ (mixedNumber &x, mixedNumber &y);
-        friend mixedNumber operator^ (mixedNumber &x, mixedNumber &y);
 
+        friend mixedNumber operator+ (mixedNumber x, const mixedNumber &y);
+        friend mixedNumber operator- (mixedNumber x, const mixedNumber &y);
+        friend mixedNumber operator* (mixedNumber x, const mixedNumber &y);
+        friend mixedNumber operator/ (mixedNumber x, const mixedNumber &y);
+        friend mixedNumber operator^ (mixedNumber x, const mixedNumber &y);
 
+        friend istream& operator>>(istream &in, mixedNumber &x);
+        friend ostream& operator<<(ostream &out, const mixedNumber &x);
+                                 
+        
         mixedNumber& operator= (const mixedNumber& y);
         mixedNumber& operator= (double doub);
+
+
 
 
 
