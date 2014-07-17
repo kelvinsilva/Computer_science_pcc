@@ -1,10 +1,14 @@
 
 #include "safearray.h"
 
+int safeArray::print_width = 0;
+
 safeArray::safeArray(string n, int s)
 {
     name = n;
     size = s;
+    print_width = 0;
+
     makeNewList(s);
 }
 
@@ -28,7 +32,7 @@ safeArray& safeArray::operator=(const safeArray &other)
     return *this;
 }
 
-int& safeArray::operator[](int index)
+mixedNumber& safeArray::operator[](int index)
 {
     if(index < 0 || index >= size)
     {
@@ -55,12 +59,12 @@ void safeArray::copy(const safeArray &other)
 {
     name = other.name;
     size = other.size;
-    list = new int[size];
+    list = new mixedNumber[size];
     for(int i = 0; i < size; i++ )
         list[i] = other.list[i];
 }
 
-int safeArray::operator()(int index)
+mixedNumber safeArray::operator()(int index)
 {
     if(index < 0 || index >= size)
     {
@@ -92,15 +96,41 @@ void safeArray::makeNewList(int s)
 
     size = s;
 
-        list = new int[s];
+    list = new mixedNumber[s];
 
     clear();
+}
+
+
+void safeArray::getPrintWidth(){
+
+    int fill = 0;
+    for (int i = 0; i < size; i++){
+
+
+        if ( list[i].getStr().length() > print_width){
+            print_width =  list[i].getStr().length();
+        }
+    }
+
+
+
 }
 
 void safeArray::clear()
 {
     for(int i = 0; i < size; i++)
         list[i] = 0;
+}
+
+ostream& safeArray::print_array(ostream &out){
+
+    getPrintWidth();
+
+    for (int i = 0; i < size; i++){
+        cout << setw(print_width) << list[i].getStr() << " ";
+    }
+
 }
 
 ostream& operator<<(ostream &out, const safeArray &list)

@@ -31,6 +31,8 @@ class two2Darray
 
         friend istream& operator>>(istream &in, two2Darray &list);
 
+        ostream& printContents(ostream &out);
+
         int getRows();
         int getCols();
 

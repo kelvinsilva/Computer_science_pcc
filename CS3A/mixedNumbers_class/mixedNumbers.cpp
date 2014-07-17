@@ -1,4 +1,3 @@
-
 #include "mixedNumbers.h"
 
 mixedNumber::mixedNumber()
@@ -337,7 +336,28 @@ ostream& operator<<(ostream &out, const mixedNumber &x)
        else
            out<<x.whole<<" "<<abs(x.num)<<"/"<<x.denom;
    return out;
+
 }
+
+string mixedNumber::getStr(){
+
+    stringstream out;
+
+    if(this->whole == 0)
+        if(this->num == 0)
+            out<<0;
+        else
+            out<<this->num<<"/"<<this->denom;
+    else
+        if(this->num == 0)
+            out<<this->whole;
+        else
+            out<<this->whole<<" "<<abs(this->num)<<"/"<<this->denom;
+
+    return out.str();
+
+}
+
 
 /*double mixedNumber::decimal_val_set(){
 

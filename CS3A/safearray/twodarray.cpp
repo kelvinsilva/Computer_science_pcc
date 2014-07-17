@@ -1,4 +1,3 @@
-
 #include "twodarray.h"
 
 two2Darray::two2Darray(string n, int r , int c)
@@ -126,6 +125,17 @@ ostream& operator<<(ostream &out, const two2Darray &list)
             out<<"Row["<<i<<"]"<<endl<<list.list[i]<<endl;
     }
     return out;
+
+
+}
+
+ostream& two2Darray::printContents(ostream &out){
+
+    for(int i = 0; i< rows; i++){
+        out << "| ";  list[i].print_array(out); out << " |" << endl;
+    }
+
+    return out;
 }
 
 
@@ -176,3 +186,4 @@ istream& operator>>(istream &in, two2Darray &lis)
     }
     return in;
 }
+

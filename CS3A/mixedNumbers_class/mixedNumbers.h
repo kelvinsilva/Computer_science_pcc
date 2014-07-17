@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
+#include <sstream>
 
 using namespace std;
 
@@ -30,6 +31,8 @@ class mixedNumber{
         void output();
 
         mixedNumber getImproper() const;
+
+        string getStr();
 
         long gcd(int x, int y);
 
