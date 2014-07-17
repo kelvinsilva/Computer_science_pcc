@@ -1005,3 +1005,23 @@ mixedNumber mixedNumber::getImproper(){
 
 
 //////
+ stringstream sline;
+    int ro = 0, co = 0;
+
+    string line;
+    cout << "\n";
+
+    getline(in, line);
+    sline.str(line);
+
+    getline (sline, line, 'x');
+
+    ro = atoi(line.c_str());
+
+    getline(sline, line);
+    co = atoi (line.c_str() );
+    sline.str("");
+    line.clear();
+
+
+
