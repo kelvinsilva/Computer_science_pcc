@@ -1025,3 +1025,20 @@ mixedNumber mixedNumber::getImproper(){
 
 
 
+////
+void add (two2Darray &arr1, two2Darray &arr2, two2Darray &arrRes){
+    int rows = 0, cols = 0;
+
+    rows = arr1.getRows();
+    cols = arr1.getCols();
+
+    for (int i = 0; i < rows; i++){
+
+        for (int j = 0; j < cols; j++){
+
+            arrRes[i][j] = arr1[i][j] + arr2[i][j];
+        }
+    }
+
+    return;
+}
