@@ -1,56 +1,140 @@
 #include <iostream>
+
 #include "mixedNumbers.h"
 #include "twodarray.h"
+#include "operationfuncs.h"
+#include "parsefuncs.h"
 
 using namespace std;
 
-int main(int argc, char *argv[])
+enum MAINERROR {DIMENSION};
+
+
+void help();
+void promptOpen(ofstream &fo, string filename);
+
+
+
+
+
+
+int main(int argc, char *argv[]){
+
+    two2Darray left("mixed");
+    two2Darray right("mixed");
+    two2Darray solution("Mixed");
+
+    ifstream *in = new ifstream[2];
+    ofstream out;
+    mixedNumber *soln_array;
+    char operation;
+
+
+    parseCommandLine(argc, argv, in, out, operation, soln_array);
+
+
+
+
+    if (in[0].is_open())
+        in[0] >> left;
+
+    if (in[1].is_open())
+        in[1] >> right;
+
+    //After the switch, then associate out with solution matrix.
+
+
+
+    switch(operation){
+
+        case 'a'  : //addd
+            {
+                if ( in[0].is_open() && in[1].is_open()){
+                    cout << "add";
+                    add (left, right, solution);
+                }else {
+                    help();
+                }
+                out << solution;//print my solution
+            }
+            break;
+
+        case 'm'  : //Multiply;
+            {
+                if ( in[0].is_open() && in[1].is_open()){
+                        cout << "smultiplyct";
+                    //multiply (left, right, solution);
+                }else {
+                    help();
+                }
+                out << solution;//print my solution
+            }
+            break;
+        case 's'  : //Subtract;
+            {
+                if ( in[0].is_open() && in[1].is_open()){
+                        cout << "msubtract;";
+                    //multiply (left, right, solution);
+                }else { //One of the instreams not open...
+                    help();
+                }
+                out << solution;//print my solution
+            }
+            break;
+        case 'g' : //gaussian elimination;
+            {
+                if (in[0].is_open()){
+                    //gelim(....)
+                    cout << "gelimming";
+                    cout << soln_array[0] << " " << soln_array[1];
+                }
+                out << solution;//print my solution
+            }
+            break;
+        case 'i' : //Inverse;
+            {
+                if (in[0].is_open()){
+                        cout << "inverse";
+                    //inverse(....)
+                }
+                out << solution; //print my solution
+            }
+            break;
+        case 'e' : //Editing;
+            {
+                if (edit(left) == true); //if editing was success
+                    out << left;
+            }
+        default :
+            { //Help
+                help();
+
+            }
+
+    }
+
+
+    if (out.is_open()){
+
+        out.close();
+    }
+
+    if (in[0].is_open())
+        in[0].close();
+
+    if (in[1].is_open())
+        in[1].close();
+
+    delete [] soln_array;
+
+   return 0;
+}
+
+
+
+void help()
 {
-
-    mixedNumber sup(true , 7, 1, 6);
-    mixedNumber he(false, 5, 1, 6);
-    mixedNumber fg;
-
-    two2Darray hold_numbers("Mixed_List", 3, 2);
-    two2Darray numb_disp("Mixed List", 3, 2);
-
-
-        hold_numbers[0][0] = 1.577848545;
-        hold_numbers[0][1] = 1.58545;
-        hold_numbers[1][0] = 1.55;
-        hold_numbers[1][1] = 1.577545;
-        hold_numbers[2][0] = 3.14159;
-        hold_numbers[2][1] = 23.47;
-
-
-
-
-
-    ifstream fi;
-    fi.open("test1.mat");
-    fi >> numb_disp;
-    fi.close();
-
-    cout << numb_disp;
-    //cout << numb_disp;
-    //cin >> hold_numbers;
-    //cout << hold_numbers;
-
-
-
-
-    //cin >> he >> sup;
-    //fg = sup + he;
-    //cout << fg;
-
-
-    //cout << "\n\n";
-    //sup.output();
-    //cout << "\n\n";
-    //cout << "sup numerator: "  << sup.getNumerator() <<endl;
-    //cout << "sup denominator: " << sup.getDenominator() << endl;
-    //cout << "sup whole: " << sup.getWhole() << endl;
-
-
-    return 0;
+   cout<<"\nPlease enter format in command line => infile1 (add/multiply) infiles2 outfile"
+       <<"\nOr infile inverse outfile for inverse"
+       <<"\nExcluding the outfile will still also work\n";
 }

@@ -14,38 +14,37 @@ enum ERROR {NOTVALID};
 
 class two2Darray
 {
-    public:
+   public:
 
 
-        two2Darray(string name = "Test", int r = 5, int c = 5);
-        ~two2Darray();
+       two2Darray(string name = "Test", int r = 5, int c = 5);
+       ~two2Darray();
 
-        two2Darray(const two2Darray &other);
-        two2Darray& operator=(const two2Darray &other);
+       two2Darray(const two2Darray &other);
+       two2Darray& operator=(const two2Darray &other);
 
-        safeArray& operator[](int index);
-        void resize(int r, int c);
-        void clear();
+       safeArray& operator[](int index);
+       void resize(int r, int c);
+       void clear();
 
-        friend ostream& operator<<(ostream &out, const two2Darray &list);
+       friend ostream& operator<<(ostream &out, const two2Darray &list);
 
-        friend istream& operator>>(istream &in, two2Darray &list);
+       friend istream& operator>>(istream &in, two2Darray &list);
 
-        ostream& printContents(ostream &out);
+       ostream& printContents(ostream &out);
 
-        int getRows();
-        int getCols();
+       int getRows();
+       int getCols();
 
+   private:
+       safeArray *list;
+       int rows, cols;
 
-    private:
-        safeArray *list;
-        int rows, cols;
+       string name;
+       void copy(const two2Darray &other);
 
-        string name;
-        void copy(const two2Darray &other);
-
-        void nukem();
-        void makeNewList(int r, int c);
+       void nukem();
+       void makeNewList(int r, int c);
 };
 
 #endif // TWO2DARRAY_H

@@ -15,58 +15,58 @@ using namespace std;
 
 class mixedNumber{
 
-    private:
+   private:
 
-        long whole, num, denom;
+       long whole, num, denom;
 
-    public:
+   public:
 
-        mixedNumber();
-        mixedNumber(long w, long n, long d);
-        mixedNumber(bool sbit, long w, long n, long d );
+       mixedNumber();
+       mixedNumber(long w, long n, long d);
+       mixedNumber(bool sbit, long w, long n, long d );
 
-        ~mixedNumber();
+       ~mixedNumber();
 
-        void reduce();
-        void output();
+       void reduce();
+       void output();
 
-        mixedNumber getImproper() const;
+       mixedNumber getImproper() const;
 
-        string getStr();
+       string getStr();
 
-        long gcd(int x, int y);
+       long gcd(int x, int y);
 
-        double getDecimalVal() const;
+       double getDecimalVal() const;
 
-        long getWhole() const;
-        long getNumerator() const;
-        long getDenominator() const;
-
-
-        void setWhole(long w);
-        void setNumerator(long q);
-        void setDenominator(long q);
+       long getWhole() const;
+       long getNumerator() const;
+       long getDenominator() const;
 
 
-        mixedNumber& operator+=(const mixedNumber &rhs);
-        mixedNumber& operator-=(const mixedNumber &rhs);
-        mixedNumber& operator*=(const mixedNumber &rhs);
-        mixedNumber& operator/=(const mixedNumber &rhs);
-        mixedNumber& operator^=(const mixedNumber &rhs);
+       void setWhole(long w);
+       void setNumerator(long q);
+       void setDenominator(long q);
 
 
-        friend mixedNumber operator+ (mixedNumber x, const mixedNumber &y);
-        friend mixedNumber operator- (mixedNumber x, const mixedNumber &y);
-        friend mixedNumber operator* (mixedNumber x, const mixedNumber &y);
-        friend mixedNumber operator/ (mixedNumber x, const mixedNumber &y);
-        friend mixedNumber operator^ (mixedNumber x, const mixedNumber &y);
-
-        friend istream& operator>>(istream &in, mixedNumber &x);
-        friend ostream& operator<<(ostream &out, const mixedNumber &x);
+       mixedNumber& operator+=(const mixedNumber &rhs);
+       mixedNumber& operator-=(const mixedNumber &rhs);
+       mixedNumber& operator*=(const mixedNumber &rhs);
+       mixedNumber& operator/=(const mixedNumber &rhs);
+       mixedNumber& operator^=(const mixedNumber &rhs);
 
 
-        mixedNumber& operator= (const mixedNumber& y);
-        mixedNumber& operator= (double doub);
+       friend mixedNumber operator+ (mixedNumber x, const mixedNumber &y);
+       friend mixedNumber operator- (mixedNumber x, const mixedNumber &y);
+       friend mixedNumber operator* (mixedNumber x, const mixedNumber &y);
+       friend mixedNumber operator/ (mixedNumber x, const mixedNumber &y);
+       friend mixedNumber operator^ (mixedNumber x, const mixedNumber &y);
+
+       friend istream& operator>>(istream &in, mixedNumber &x);
+       friend ostream& operator<<(ostream &out, const mixedNumber &x);
+
+
+       mixedNumber& operator= (const mixedNumber& y);
+       mixedNumber& operator= (double doub);
 
 
 };

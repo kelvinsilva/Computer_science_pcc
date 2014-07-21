@@ -2,28 +2,28 @@
 
 mixedNumber::mixedNumber()
 {
-    whole = 0;
-    num = 0;
-    denom = 1;
+   whole = 0;
+   num = 0;
+   denom = 1;
 }
 
 mixedNumber::mixedNumber(long w, long n, long d){
 
-    whole = n ? w : 0;
-    num = n ? n : w;
-    denom = abs(d);
+   whole = n ? w : 0;
+   num = n ? n : w;
+   denom = abs(d);
 
 }
 
 mixedNumber::mixedNumber( bool sbit, long w, long n, long d){
 
-    whole = n ? w : 0;
-    num = n ? n : w;
+   whole = n ? w : 0;
+   num = n ? n : w;
 
-    whole = sbit ? w*-1 : w;
-    num = sbit ? n*-1 : n;
+   whole = sbit ? w*-1 : w;
+   num = sbit ? n*-1 : n;
 
-    denom = abs(d);
+   denom = abs(d);
 
 }
 
@@ -34,357 +34,374 @@ mixedNumber::~mixedNumber(){
 
 void mixedNumber::reduce()
 {
-    int div, newNum;
-    newNum =  denom * whole + num;
-    div = gcd(abs(newNum), denom);
-    newNum = newNum/ div;
-    denom = denom / div;
+   int div, newNum;
+   newNum =  denom * whole + num;
+   div = gcd(abs(newNum), denom);
+   newNum = newNum/ div;
+   denom = denom / div;
 
-    denom = abs(denom);
-    whole = newNum / denom;
-    num = newNum % denom;
+   denom = abs(denom);
+   whole = newNum / denom;
+   num = newNum % denom;
 }
 
 long mixedNumber::gcd(int p, int q)
 {
-    return q == 0 ? p : gcd(q, p%q);
+   return q == 0 ? p : gcd(q, p%q);
 }
 
 /*
 int mixedNumber::gcd(int p, int q)
 {
-    int r;
-    while((r = p%q) != 0)
-    {
-        p = q;
-        q = r;
-    }
-    return q;
+   int r;
+   while((r = p%q) != 0)
+   {
+       p = q;
+       q = r;
+   }
+   return q;
 )
 
-    return
+   return
 }
 */
 
 void mixedNumber::output()
 {
-    if(whole == 0 && num == 0)
-        cout<<0;
-    else
-      if(whole == 0)
-        cout<<num<<"/"<<denom;
-      else
-         if(num == 0)
-                cout<<whole;
-         else
-                cout<<whole<<" "<<abs(num)<<"/"<<denom;
+   if(whole == 0 && num == 0)
+       cout<<0;
+   else
+     if(whole == 0)
+       cout<<num<<"/"<<denom;
+     else
+        if(num == 0)
+               cout<<whole;
+        else
+               cout<<whole<<" "<<abs(num)<<"/"<<denom;
 }
 
 long mixedNumber::getWhole() const{
-    return whole;
+   return whole;
 
 }
 
 long mixedNumber::getNumerator() const{
-    return num;
+   return num;
 }
 
 long mixedNumber::getDenominator() const{
-    return denom;
+   return denom;
 }
 
 /////////////////////////////////////////////////////////////
 
 void mixedNumber::setWhole(long w){
-    whole = w;
+   whole = w;
 }
 
 void mixedNumber::setNumerator(long q){
-    num = q;
+   num = q;
 }
 
 void mixedNumber::setDenominator(long q){
-    //lets make sure that the denominator is positive.
-    denom = abs(q);
+   //lets make sure that the denominator is positive.
+   denom = abs(q);
 }
 
 mixedNumber& mixedNumber::operator= (const mixedNumber& y){
 
-    this->whole = y.whole;
-    this->num = y.num;
-    this->setDenominator( y.denom);
+   this->whole = y.whole;
+   this->num = y.num;
+   this->setDenominator( y.denom);
 
-    return *this;
+   return *this;
 
 }
 //Originally implemented as double_to_fraction
 mixedNumber& mixedNumber::operator= ( double dec){
 
-    if (dec > 0){
+   if (dec > 0){
 
 
-        this->whole = trunc(dec);
-        double decDecimal = abs(trunc(dec) - dec);
-        int number_to_raise = get_num_of_places(decDecimal);
-        int numerator = decDecimal * pow(10, number_to_raise);
-        int denominator =  pow(10, number_to_raise);
+       this->whole = trunc(dec);
+       double decDecimal = abs(trunc(dec) - dec);
+       int number_to_raise = get_num_of_places(decDecimal);
+       int numerator = decDecimal * pow(10, number_to_raise);
+       int denominator =  pow(10, number_to_raise);
 
-        this->num = numerator;
-        this->setDenominator( denominator);
+       this->num = numerator;
+       this->setDenominator( denominator);
 
-        this->reduce();
+       this->reduce();
 
-        return *this;
+       return *this;
 
-    }else {
+   }
+   else
+   {
+       this->whole = trunc(dec);
 
-        this->whole = trunc(dec);
+       double decDecimal = abs(trunc(dec) - dec);
 
-        double decDecimal = abs(trunc(dec) - dec);
+       int number_to_raise = get_num_of_places(decDecimal);
+       int numerator = decDecimal * pow(10, number_to_raise) * -1;
+       int denominator =  pow(10, number_to_raise);
 
-        int number_to_raise = get_num_of_places(decDecimal);
-        int numerator = decDecimal * pow(10, number_to_raise) * -1;
-        int denominator =  pow(10, number_to_raise);
+       this->num = numerator;
+       this->setDenominator( denominator);
 
-        this->num = numerator;
-        this->setDenominator( denominator);
+       this->reduce();
 
-        this->reduce();
-
-        return *this;
-    }
+       return *this;
+   }
 
 }
 
 
 double mixedNumber::getDecimalVal() const{
 
-    mixedNumber temp = this->getImproper();
-    return (double)temp.getNumerator()/temp.getDenominator();
+   mixedNumber temp = this->getImproper();
+   return (double)temp.getNumerator()/temp.getDenominator();
 
 }
 
 
 mixedNumber mixedNumber::getImproper() const{
 
-    mixedNumber ret_val;
+   mixedNumber ret_val;
 
-    if (whole == 0){
+   if (whole == 0){
 
-                ret_val.setNumerator(num);
-                ret_val.setDenominator(denom);
-                ret_val.setWhole(0);
-    }else {
-
-               int nume = whole*denom;
-               nume += num;
-               ret_val.setNumerator(nume);
+               ret_val.setNumerator(num);
                ret_val.setDenominator(denom);
                ret_val.setWhole(0);
+   }else {
 
-    }
+              int nume = whole*denom;
+              nume += num;
+              ret_val.setNumerator(nume);
+              ret_val.setDenominator(denom);
+              ret_val.setWhole(0);
 
-    return ret_val;
+   }
+
+   return ret_val;
 }
 
 mixedNumber& mixedNumber::operator+=(const mixedNumber &y){
 
-    this->num = (this->whole*this->denom+this->num)*y.denom + (y.whole*y.denom+y.num)*this->denom;
-    this->setDenominator( this->denom * y.denom);
-    this->whole = 0;
-    this->reduce();
+   this->num = (this->whole*this->denom+this->num)*y.denom + (y.whole*y.denom+y.num)*this->denom;
+   this->setDenominator( this->denom * y.denom);
+   this->whole = 0;
+   this->reduce();
 
-    return *this;
+   return *this;
 
 }
 
 mixedNumber& mixedNumber::operator-=(const mixedNumber &y){
 
-    this->num = (this->whole*this->denom+this->num)*y.denom - (y.whole*y.denom+y.num)*this->denom;
-    this->setDenominator( this->denom * y.denom);
-    this->whole = 0;
-    this->reduce();
+   this->num = (this->whole*this->denom+this->num)*y.denom - (y.whole*y.denom+y.num)*this->denom;
+   this->setDenominator( this->denom * y.denom);
+   this->whole = 0;
+   this->reduce();
 
 
-    return *this;
+   return *this;
 }
 
 mixedNumber& mixedNumber::operator*=(const mixedNumber &y){
 
-    this->num = (this->whole*this->denom+this->num) * (y.whole*y.denom+y.num);
-    this->setDenominator( this->denom * y.denom );
-    this->whole = 0;
-    this->reduce();
+   this->num = (this->whole*this->denom+this->num) * (y.whole*y.denom+y.num);
+   this->setDenominator( this->denom * y.denom );
+   this->whole = 0;
+   this->reduce();
 
-    return *this;
+   return *this;
 }
 
 mixedNumber& mixedNumber::operator/=(const mixedNumber &y){
 
-    this->num = (this->whole*this->denom+this->num) * y.denom;
-    this->setDenominator( this->denom * (y.whole*y.denom+y.num) );
-    this->reduce();
-    this->whole = 0;
-    return *this;
+   this->num = (this->whole*this->denom+this->num) * y.denom;
+   this->setDenominator( this->denom * (y.whole*y.denom+y.num) );
+   this->reduce();
+   this->whole = 0;
+   return *this;
 
 }
 
 mixedNumber& mixedNumber::operator^=(const mixedNumber &y){
 
 
-    double frac_to_convert = pow(this->getDecimalVal(), y.getDecimalVal());
+   double frac_to_convert = pow(this->getDecimalVal(), y.getDecimalVal());
 
-    *this = frac_to_convert;
+   *this = frac_to_convert;
 
-    return *this;
+   return *this;
 }
 
 mixedNumber operator+ (mixedNumber x, const mixedNumber &y){
 
-    x += y;
-    return x;
+   x += y;
+   return x;
 }
 
 mixedNumber operator- (mixedNumber x, const mixedNumber &y){
 
-    x -= y;
-    return x;
+   x -= y;
+   return x;
 }
 
 mixedNumber operator* ( mixedNumber x, const mixedNumber &y){
 
-    x *= y;
-    return x;
+   x *= y;
+   return x;
 
 }
 
 mixedNumber operator/ ( mixedNumber x, const mixedNumber &y){
 
-     x /= y;
-     return x;
+    x /= y;
+    return x;
 }
 
 mixedNumber operator^ ( mixedNumber x, const mixedNumber &y){
 
-    x ^= y;
+   x ^= y;
 
-    return x;
+   return x;
 }
 
 int get_num_of_places(double dec){
 
-    int counter = 0;
-    int integer_val = 0;
+   int counter = 0;
+   int integer_val = 0;
 
-    do {
+   do {
 
-        integer_val = trunc(dec);
-        dec = abs(integer_val - dec);
+       integer_val = trunc(dec);
+       dec = abs(integer_val - dec);
 
-        dec *= 10;
-        counter++;
+       dec *= 10;
+       counter++;
 
-    }while ( !((int)floor((float)dec) == (int)ceil((float)dec)) && (counter != 7) ); //counter!=7, to DEFAULT at most 7 decimal places.
-                                                                                    //Any more will put too much error, bit overrun
+   }while ( !((int)floor((float)dec) == (int)ceil((float)dec)) && (counter != 7) ); //counter!=7, to DEFAULT at most 7 decimal places.
+                                                                                   //Any more will put too much error, bit overrun
 
-    return counter;
+   return counter;
 
 }
 
 istream& operator>>(istream &in, mixedNumber &x)
 {
-    int whole = 0, num = 0, denom = 1;
+   int whole = 0, num = 0, denom = 1;
     char junk;
     in>>whole;
-    if(in.peek() == '/')
-    {
-        num = whole;
-        whole = 0;
-        in>>junk>>denom;
-
-    }
-    else
-    {
-        char space = in.get();
-        if(in.peek() >='0' && in.peek() <= '9' || in.peek() == '-' || in.peek() == '+')
-        {
-            in >>num>>junk>>denom;
-        }
-        else{
-            in.unget();
-            cout << "\nsyntax error\n";
-        }
-    }
-
     x.whole = whole;
-    x.num = whole < 0 ? abs(num)*-1 : abs(num);
-    x.denom = abs(denom);
-    x.reduce();
-    return in;
+
+    if ( in.peek() != '\0' || in.eof()){ //if we have not reached the end of line or end of input. So i can catch whole number easily
+        if(in.peek() == '/'){ //For example if i just type in "4", then i have end of input and/or end of line '\0'
+                num = whole;    //Then i dont need to go through the rest of the if statements
+                whole = 0;
+                in>>junk>>denom;
+
+                x.whole = 0;
+                x.num = num;
+                x.denom = denom;
+
+                x.reduce();
+                return in;
+
+        }
+        else if(in.peek() == ' '){
+
+            char space = in.get();
+            if(in.peek() >='0' && in.peek() <= '9' || in.peek() == '-' || in.peek() == '+')
+                {
+                    in >>num>>junk>>denom;
+                }
+                else{
+                    in.unget();
+
+                }
+
+            x.whole = whole;
+            x.num = whole <= 0 ? abs(num)*-1 : abs(num);
+            x.denom = abs(denom);
+            x.reduce();
+            return in;
+
+        }
+    }
+
+        x.num = 0;
+        x.denom = 1;
+
+        return in;
 }
 
 ostream& operator<<(ostream &out, const mixedNumber &x)
 {
-   if(x.whole == 0)
-       if(x.num == 0)
-           out<<0;
-       else
-           out<<x.num<<"/"<<x.denom;
-   else
-       if(x.num == 0)
-           out<<x.whole;
-       else
-           out<<x.whole<<" "<<abs(x.num)<<"/"<<x.denom;
-   return out;
+  if(x.whole == 0)
+      if(x.num == 0)
+          out<<0;
+      else
+          out<<x.num<<"/"<<x.denom;
+  else
+      if(x.num == 0)
+          out<<x.whole;
+      else
+          out<<x.whole<<" "<<abs(x.num)<<"/"<<x.denom;
+  return out;
 
 }
 
 string mixedNumber::getStr(){
 
-    stringstream out;
+   stringstream out;
 
-    if(this->whole == 0)
-        if(this->num == 0)
-            out<<0;
-        else
-            out<<this->num<<"/"<<this->denom;
-    else
-        if(this->num == 0)
-            out<<this->whole;
-        else
-            out<<this->whole<<" "<<abs(this->num)<<"/"<<this->denom;
+   if(this->whole == 0)
+       if(this->num == 0)
+           out<<0;
+       else
+           out<<this->num<<"/"<<this->denom;
+   else
+       if(this->num == 0)
+           out<<this->whole;
+       else
+           out<<this->whole<<" "<<abs(this->num)<<"/"<<this->denom;
 
-    return out.str();
+   return out.str();
 
 }
 
 
 /*double mixedNumber::decimal_val_set(){
 
-    if (dec > 0){
+   if (dec > 0){
 
-        mixedNumber temp;
-        temp.whole = trunc(dec);
-        double decDecimal = abs(trunc(dec) - dec);
-        int number_to_raise = get_num_of_places(decDecimal);
-        int numerator = decDecimal * pow(10, number_to_raise);
-        int denominator =  pow(10, number_to_raise);
+       mixedNumber temp;
+       temp.whole = trunc(dec);
+       double decDecimal = abs(trunc(dec) - dec);
+       int number_to_raise = get_num_of_places(decDecimal);
+       int numerator = decDecimal * pow(10, number_to_raise);
+       int denominator =  pow(10, number_to_raise);
 
-        temp.num = numerator;
-        temp.denom = denominator;
-        return temp;
+       temp.num = numerator;
+       temp.denom = denominator;
+       return temp;
 
-    }else {
-        mixedNumber temp;
-        temp.whole = trunc(dec);
-        double decDecimal = abs(trunc(dec) - dec);
-        int number_to_raise = get_num_of_places(decDecimal);
-        int numerator = decDecimal * pow(10, number_to_raise) * -1;
-        int denominator =  pow(10, number_to_raise);
+   }else {
+       mixedNumber temp;
+       temp.whole = trunc(dec);
+       double decDecimal = abs(trunc(dec) - dec);
+       int number_to_raise = get_num_of_places(decDecimal);
+       int numerator = decDecimal * pow(10, number_to_raise) * -1;
+       int denominator =  pow(10, number_to_raise);
 
-        temp.num = numerator;
-        temp.denom = denominator;
-        return temp;
-    }
+       temp.num = numerator;
+       temp.denom = denominator;
+       return temp;
+   }
 
 }*/
