@@ -97,6 +97,7 @@ void two2Darray::makeNewList(int r, int c)
    {
        safeArray *temp = new safeArray("Column",c);
        list[i] = *temp;
+       //cout<<endl<<"List at "<<i<<" = "<<list[i];//TRACETRACE
        delete temp;
    }
 }
@@ -109,17 +110,6 @@ int two2Darray::getRows(){
    return rows;
 }
 
-ostream& operator<<(ostream &out, const two2Darray &list)
-{
-   out << list.rows << "x" << list.cols << endl;
-   for (int i = 0; i < list.rows; i++){
-       out << list.list[i] << endl;
-   }
-   return out;
-
-
-}
-
 ostream& two2Darray::printContents(ostream &out){
 
    for(int i = 0; i< rows; i++){
@@ -129,8 +119,19 @@ ostream& two2Darray::printContents(ostream &out){
    return out;
 }
 
+ostream& operator<<(ostream &out, const two2Darray &list)
+{
+   out << list.rows << "x" << list.cols << endl;
+   cout<< endl << list.rows << "x" << list.cols << endl;
+   for (int i = 0; i < list.rows; i++){
+       out << list.list[i] << endl;
+   }
+   return out;
 
-istream& operator>>(istream &in, two2Darray &lis)
+
+}
+
+istream& operator>>(istream &in, two2Darray &list)
 {
 
    stringstream sline;
@@ -138,16 +139,15 @@ istream& operator>>(istream &in, two2Darray &lis)
 
    int ro = 0, co = 0;
    char junk = 0;
-   in >> ro >> junk >> co;
-   lis.resize(ro, co);
-   lis.rows = ro;
-   lis.cols = co;
-   in.get();
-
-       for(int i = 0; i < lis.rows; i++){
+   in >> ro >> junk >> co;  //The format of the matrix needs to be included in the beginning of the array in the format "2x2"
+   list.resize(ro, co);     //The array is then entered as a comma seperated list for each row and a return indicating that it is a new row.
+   list.rows = ro;          //Ex: 2x2
+   list.cols = co;          //    1,2
+   in.get();                //    3,4
+       for(int i = 0; i < list.rows; i++){
            getline(in,line);
            sline << line;
-           sline >> lis[i];
+           sline >> list[i];
            sline.str("");
            sline.clear();
        }

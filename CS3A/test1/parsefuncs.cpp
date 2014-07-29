@@ -12,22 +12,7 @@ bool fileExists(const char *filename){
 
 }
 
-string clean_name(string filename){
-
-    string ret_val;
-    int pos = filename.find('.');
-    if (pos != string::npos){ //If we do not find any '.', find function returns string::npos
-        ret_val = filename.substr(0, pos); //So then !npos means we found something, so append to filename everything except the file extension
-    }else {
-        ret_val = filename;     //if we did not find anything just append the filename.
-    }
-
-    ret_val.append(".mat");
-
-    return ret_val;
-}
-
-void parseCommandLine(int argc,char *argv[], ifstream *in, ofstream &out, char &operation, mixedNumber* &soln_matrix){
+void parseCommandLine(int argc,char *argv[], ifstream *in, ofstream &out, char &operation,  mixedNumber* &soln_matrix){
 
     //First step, check if there are any /h or /? characters in argument list
     //If there are, then we defer to the help prompt and exit the program.
@@ -117,6 +102,7 @@ void parseCommandLine(int argc,char *argv[], ifstream *in, ofstream &out, char &
                         operation = 0;
                         break;
                     }
+
                  if ( argc > 4 ){ //If we have an output....
 
                      if (fileExists(argv[i+2])){ //and this file already exists...
@@ -233,4 +219,20 @@ void promptOpen(ofstream &fo, string filename){
     }while (good);
 
 }
+
+string clean_name(string filename){
+
+    string ret_val;
+    int pos = filename.find('.');
+    if (pos != string::npos){ //If we do not find any '.', find function returns string::npos
+        ret_val = filename.substr(0, pos); //So then !npos means we found something, so append to filename everything except the file extension
+    }else {
+        ret_val = filename;     //if we did not find anything just append the filename.
+    }
+
+    ret_val.append(".mat");
+
+    return ret_val;
+}
+
 

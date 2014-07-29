@@ -316,7 +316,7 @@ istream& operator>>(istream &in, mixedNumber &x)
         else if(in.peek() == ' '){
 
             char space = in.get();
-            if(in.peek() >='0' && in.peek() <= '9' || in.peek() == '-' || in.peek() == '+')
+            if((in.peek() >='0' && in.peek() <= '9') || (in.peek() == '-' || in.peek() == '+'))
                 {
                     in >>num>>junk>>denom;
                 }

@@ -102,7 +102,7 @@ void safeArray::makeNewList(int s)
 
 
 void safeArray::getPrintWidth(){
-   int fill = 0;
+   unsigned int fill = 0;
    for (int i = 0; i < size; i++){
        if ( list[i].getStr().length() > print_width){
            print_width =  list[i].getStr().length();

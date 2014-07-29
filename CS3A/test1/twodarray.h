@@ -24,17 +24,18 @@ class two2Darray
        two2Darray& operator=(const two2Darray &other);
 
        safeArray& operator[](int index);
+
        void resize(int r, int c);
        void clear();
 
        friend ostream& operator<<(ostream &out, const two2Darray &list);
-
        friend istream& operator>>(istream &in, two2Darray &list);
 
        ostream& printContents(ostream &out);
 
        int getRows();
        int getCols();
+
 
    private:
        safeArray *list;
